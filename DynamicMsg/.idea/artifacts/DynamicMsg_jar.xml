@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DynamicMsg:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DynamicMsg_jar</output-path>
+    <root id="archive" name="DynamicMsg.jar">
+      <element id="module-output" name="DynamicMsg" />
+    </root>
+  </artifact>
+</component>
