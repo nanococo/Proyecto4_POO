@@ -144,17 +144,19 @@ public class PantallaSeguidor extends javax.swing.JFrame {
 
     private void btnFollowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFollowActionPerformed
         //Send data id del post es enviado a servidor con la instruccion follow
+        client.follow();
     }//GEN-LAST:event_btnFollowActionPerformed
 
     private void setPost(Post post){
         this.currentPostId = post.getId();
-        txtPost.setText(post.getContenido());
+        txtPost.setText(post.getContent());
         lblLikes.setText(String.valueOf(post.getLikes()));
         lblPostAutor.setText(post.getNombreAutor());//Dudas con el autor
     }
     
     private Post askForNext() {
         //Receive data recibe por default el 0 despues envia el current y le devuelven el que sigue si es el ultimo retorna el 0
+
         return null;
     }
 

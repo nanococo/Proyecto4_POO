@@ -7,18 +7,19 @@ import Observer.ISubject;
 
 import java.util.ArrayList;
 
-public class Celebrity implements ISubject{
+public class Celebrity implements ISubject {
 
     ArrayList<Post> posts;
-    ArrayList<IObserver> seguidores;
+    ArrayList<Follower> seguidores;
+
     final int NOTIFICAR = 2;
     public String nombre;
     int id;//Con el cual es buscado por el servidor
 
     public Celebrity(String nombre, int id){
         this.nombre = nombre;
-        this.posts = new ArrayList<Post>();
-        this.seguidores = new ArrayList<IObserver>();
+        this.posts = new ArrayList<>();
+        this.seguidores = new ArrayList<>();
         this.id = id;
     }
 
@@ -31,7 +32,7 @@ public class Celebrity implements ISubject{
     }
 
     public void addFollower(IObserver observer){
-        this.seguidores.add(observer);
+        //this.seguidores.add(observer);
         if(reachedXFollowers())
             notifyAllSubs(NotificacionesRedSocial.VIPFOLLOWERS);
     }
@@ -42,7 +43,7 @@ public class Celebrity implements ISubject{
 
 
     public void addObserver(IObserver observer) {
-        this.seguidores.add(observer);
+        //this.seguidores.add(observer);
     }
 
     public void notifyAllSubs(NotificacionesRedSocial tipo) {

@@ -1,7 +1,6 @@
 package Networking.ServerSide;
 
 import App.Accounts.Follower;
-import Messaging.IMessage;
 import Networking.Messages.GenericMessage;
 
 import java.io.IOException;
@@ -36,7 +35,7 @@ public class Listener extends Thread {
                         if(message.getParams()[0].equals("follower")){
                             server.getFollowers().add(new Follower());
                         } else if(message.getParams()[0].equals("celebrity")){
-                            server.getFollowers().add(new Follower());
+                            //server.getFollowers().add(new Celebrity());
                         }
                         break;
 
