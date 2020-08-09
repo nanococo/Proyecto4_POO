@@ -10,6 +10,7 @@ public class Celebridad implements IObserver, ISubject {
     ArrayList<Post> posts;
     ArrayList<IObserver> seguidores;
     final int NOTIFICAR = 2;
+    String nombre;
 
 
 
@@ -45,5 +46,9 @@ public class Celebridad implements IObserver, ISubject {
 
     public void notifySub(IObserver observer) {
 
+    }
+    
+    public void sendNotification(NotificacionesRedSocial tipo){
+        
     }
 }

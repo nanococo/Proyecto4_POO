@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaapplication6;
+package App;
 
 /**
  *
@@ -11,9 +11,9 @@ package javaapplication6;
  */
 public class PantallaSeguidor extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PantallaRedSocial
-     */
+   
+    Seguidor seguidor;
+    
     public PantallaSeguidor() {
         initComponents();
     }
@@ -39,12 +39,32 @@ public class PantallaSeguidor extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnLike.setText("Like");
+        btnLike.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLikeActionPerformed(evt);
+            }
+        });
 
         btnFollow.setText("Follow");
+        btnFollow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFollowActionPerformed(evt);
+            }
+        });
 
         btnPrev.setText("Previous");
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
 
         btnNext.setText("Next");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
         txtPost.setColumns(20);
         txtPost.setRows(5);
@@ -85,17 +105,43 @@ public class PantallaSeguidor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLike)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPrev)
-                    .addComponent(btnNext)
-                    .addComponent(lblLikes, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblLikes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnLike)
+                        .addComponent(btnNext)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        if(seguidor.askForNext() != null)
+            setPost();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        if(seguidor.askForPrev() != null)
+            setPost();
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void btnLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLikeActionPerformed
+        seguidor.sendLike();
+    }//GEN-LAST:event_btnLikeActionPerformed
+
+    private void btnFollowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFollowActionPerformed
+        seguidor.sendFollow();
+    }//GEN-LAST:event_btnFollowActionPerformed
+
+    private void setPost(){
+        txtPost.setText(seguidor.actualPost.contenido);
+        lblLikes.setText(String.valueOf(seguidor.actualPost.likes));
+        lblPostAutor.setText(seguidor.actualPost.getNombreAutor());
+    }
+    
+    
     /**
      * @param args the command line arguments
      */

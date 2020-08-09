@@ -3,18 +3,17 @@ package App;
 import Observer.IObserver;
 import Observer.ISubject;
 
-public class Post implements ISubject {
+public class Post {
 
     int id;
-    IObserver autor;
+    private Celebridad autor;
     String contenido;
     int likes;
     final int NOTIFICAR = 2;
 
 
 
-    Post(IObserver observer,String contenido){
-        this.autor = observer;
+    Post(String contenido){
         this.contenido = contenido;
         this.likes = 0;
     }
@@ -28,18 +27,10 @@ public class Post implements ISubject {
     public void sumarLike(){
         likes++;
         if (reachedXLikes());
-            notifyAll();
+            autor.
     }
 
-    public void addObserver() {
-
-    }
-
-    public void notifyAllSubs() {
-
-    }
-
-    public void notifySub(IObserver observer) {
-
+    public String getNombreAutor() {
+        return this.autor.nombre;
     }
 }
