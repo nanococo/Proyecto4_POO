@@ -1,8 +1,6 @@
-package RedSocial;
+package App;
 
-import Observer.Notification;
-
-public class NotificacionSocial extends Notification {
+public class NotificacionSocial  {
 
     public NotificacionSocial(){
 

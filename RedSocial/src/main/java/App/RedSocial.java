@@ -1,4 +1,4 @@
-package RedSocial;
+package App;
 
 public class RedSocial {
 
