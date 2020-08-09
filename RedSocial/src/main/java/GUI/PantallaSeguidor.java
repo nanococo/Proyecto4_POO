@@ -7,6 +7,8 @@ package GUI;
 
 import App.AccountTypes;
 import Networking.ClientSide.Client;
+import App.Post;
+import App.Seguidor;
 
 /**
  *
@@ -20,6 +22,8 @@ public class PantallaSeguidor extends javax.swing.JFrame {
     /**
      * Creates new form PantallaRedSocial
      */
+    int currentPostId;
+    
     public PantallaSeguidor() {
         initComponents();
     }
@@ -45,12 +49,32 @@ public class PantallaSeguidor extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnLike.setText("Like");
+        btnLike.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLikeActionPerformed(evt);
+            }
+        });
 
         btnFollow.setText("Follow");
+        btnFollow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFollowActionPerformed(evt);
+            }
+        });
 
         btnPrev.setText("Previous");
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
 
         btnNext.setText("Next");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
         txtPost.setColumns(20);
         txtPost.setRows(5);
@@ -91,17 +115,57 @@ public class PantallaSeguidor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLike)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnPrev)
-                    .addComponent(btnNext)
-                    .addComponent(lblLikes, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblLikes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnLike)
+                        .addComponent(btnNext)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        Post post = askForNext();
+        if(post != null)
+            setPost(post);
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        Post post = askForPrev();
+        if(post != null)
+            setPost(post);
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void btnLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLikeActionPerformed
+        //Send data id del post es enviado a servidor con la instruccion like
+    }//GEN-LAST:event_btnLikeActionPerformed
+
+    private void btnFollowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFollowActionPerformed
+        //Send data id del post es enviado a servidor con la instruccion follow
+    }//GEN-LAST:event_btnFollowActionPerformed
+
+    private void setPost(Post post){
+        this.currentPostId = post.getId();
+        txtPost.setText(post.getContenido());
+        lblLikes.setText(String.valueOf(post.getLikes()));
+        lblPostAutor.setText(post.getNombreAutor());//Dudas con el autor
+    }
+    
+    private Post askForNext() {
+        //Receive data recibe por default el 0 despues envia el current y le devuelven el que sigue si es el ultimo retorna el 0
+        return null;
+    }
+
+    private Post askForPrev() {
+        //Recieve data
+        return null;
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -150,4 +214,5 @@ public class PantallaSeguidor extends javax.swing.JFrame {
     private javax.swing.JLabel lblPostAutor;
     private javax.swing.JTextArea txtPost;
     // End of variables declaration//GEN-END:variables
+
 }

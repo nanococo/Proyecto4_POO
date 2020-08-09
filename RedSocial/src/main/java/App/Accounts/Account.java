@@ -1,23 +1,13 @@
 package App.Accounts;
 
+import App.Notifications.NotificacionesRedSocial;
 import Observer.IObserver;
-import Observer.ISubject;
 
-public class Account implements IObserver, ISubject {
+public class Account implements IObserver {
 
-    public void update() {
 
-    }
-
-    public void addObserver() {
-
-    }
-
-    public void notifyAllSubs() {
-
-    }
-
-    public void notifySub(IObserver observer) {
+    @Override
+    public void update(NotificacionesRedSocial tipo) {
 
     }
 }

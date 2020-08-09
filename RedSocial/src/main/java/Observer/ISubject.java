@@ -1,11 +1,11 @@
 package Observer;
 
+import App.Notifications.NotificacionesRedSocial;
+
 public interface ISubject {
 
-    public void addObserver();
+    public void addObserver(IObserver observer);
 
-    public void notifyAllSubs();
-
-    public void notifySub(IObserver observer);
+    public void notifyAllSubs(NotificacionesRedSocial tipo);
 
 }
