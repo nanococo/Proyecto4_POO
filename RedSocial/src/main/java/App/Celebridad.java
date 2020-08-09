@@ -1,4 +1,4 @@
-package RedSocial;
+package App;
 
 import Observer.IObserver;
 import Observer.ISubject;
@@ -11,25 +11,7 @@ public class Celebridad implements IObserver, ISubject {
     ArrayList<IObserver> seguidores;
     final int NOTIFICAR = 2;
 
-    @Override
-    public void update() {
-        //Recibe las notificaciones de manera diferente
-    }
 
-    @Override
-    public void addObserver() {
-
-    }
-
-    @Override
-    public void notifyAllSubs() {
-
-    }
-
-    @Override
-    public void notifySub(IObserver observer) {
-
-    }
 
     public void postearMensaje(){
 
@@ -49,4 +31,19 @@ public class Celebridad implements IObserver, ISubject {
     }
 
 
+    public void update() {
+
+    }
+
+    public void addObserver() {
+
+    }
+
+    public void notifyAllSubs() {
+
+    }
+
+    public void notifySub(IObserver observer) {
+
+    }
 }
