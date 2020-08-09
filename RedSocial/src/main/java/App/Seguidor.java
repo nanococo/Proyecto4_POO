@@ -1,26 +1,26 @@
 package App;
 
-public class Seguidor {
+import App.Notifications.NotificacionesRedSocial;
+import App.Notifications.NotificationManager;
+import App.Notifications.PostLikesNotification;
+import App.Notifications.VipFollowersNotification;
+import Observer.IObserver;
+
+public class Seguidor implements IObserver {
     
-    Post actualPost;
+    int id;
     
-    public Post askForNext(){//Puedo cambiarlo por un paquete que tenga el contenido, el nombre del autor, los likes y el codigo del post
-        //El servidor retorna el codigo siguiente hacerlo circular
-        return null;
+    public int getId(){
+        return id;
     }
     
-    public Post askForPrev(){
-        return null;
-    }
-    
-    public void sendLike(){
-        
-    }
-    
-    public void sendFollow(){
-        //La celebridad es un subcriptor del server, el server recibe el id y hace un notify a la celebridad y esta se suma un subscriptor
-        //de igual manera hace con el like
-        //Envia al server el server busca el id del post y le suma un follower al array
-        //
+    public void update(NotificacionesRedSocial tipo) {
+        switch(tipo){
+            case VIPFOLLOWERS:
+                NotificationManager.sendNotification(new VipFollowersNotification());
+                break;
+            case POSTLIKES:
+                NotificationManager.sendNotification(new PostLikesNotification());
+        }
     }
 }

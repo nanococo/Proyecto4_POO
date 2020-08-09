@@ -1,4 +1,4 @@
-package App;
+package App.Notifications;
 
 public class NotificacionSocial  {
 

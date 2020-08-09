@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package App;
+package GUI;
+
+import App.Post;
+import App.Seguidor;
 
 /**
  *
@@ -11,8 +14,8 @@ package App;
  */
 public class PantallaSeguidor extends javax.swing.JFrame {
 
-   
-    Seguidor seguidor;
+
+    int currentPostId;
     
     public PantallaSeguidor() {
         initComponents();
@@ -118,28 +121,41 @@ public class PantallaSeguidor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        if(seguidor.askForNext() != null)
-            setPost();
+        Post post = askForNext();
+        if(post != null)
+            setPost(post);
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
-        if(seguidor.askForPrev() != null)
-            setPost();
+        Post post = askForPrev();
+        if(post != null)
+            setPost(post);
     }//GEN-LAST:event_btnPrevActionPerformed
 
     private void btnLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLikeActionPerformed
-        seguidor.sendLike();
+        //Send data id del post es enviado a servidor con la instruccion like
     }//GEN-LAST:event_btnLikeActionPerformed
 
     private void btnFollowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFollowActionPerformed
-        seguidor.sendFollow();
+        //Send data id del post es enviado a servidor con la instruccion follow
     }//GEN-LAST:event_btnFollowActionPerformed
 
-    private void setPost(){
-        txtPost.setText(seguidor.actualPost.contenido);
-        lblLikes.setText(String.valueOf(seguidor.actualPost.likes));
-        lblPostAutor.setText(seguidor.actualPost.getNombreAutor());
+    private void setPost(Post post){
+        this.currentPostId = post.getId();
+        txtPost.setText(post.getContenido());
+        lblLikes.setText(String.valueOf(post.getLikes()));
+        lblPostAutor.setText(post.getNombreAutor());//Dudas con el autor
     }
+    
+    private Post askForNext() {
+        //Receive data recibe por default el 0 despues envia el current y le devuelven el que sigue si es el ultimo retorna el 0
+        return;
+    }
+
+    private Post askForPrev() {
+        //Recieve data
+    }
+    
     
     
     /**
@@ -188,4 +204,5 @@ public class PantallaSeguidor extends javax.swing.JFrame {
     private javax.swing.JLabel lblPostAutor;
     private javax.swing.JTextArea txtPost;
     // End of variables declaration//GEN-END:variables
+
 }
