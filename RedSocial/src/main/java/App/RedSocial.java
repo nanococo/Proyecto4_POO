@@ -1,5 +1,7 @@
 package App;
 
+import App.Accounts.Celebrity;
+import App.Accounts.Follower;
 import App.Notifications.NewPostNotification;
 import App.Notifications.NotificacionSocial;
 import App.Notifications.NotificacionesRedSocial;
@@ -9,9 +11,9 @@ import java.util.ArrayList;
 
     public class RedSocial {
 
-        ArrayList<Celebridad> celebridades;
+        ArrayList<Celebrity> celebridades;
         ArrayList<Post> posts;//
-        ArrayList<Seguidor> seguidores;
+        ArrayList<Follower> seguidores;
         int postConsecutive = 1;//Si es 0 es que aun no esta asignado
         int seguidorConsecutive = 1;
         int celebridadConsecutive = 1;
@@ -19,25 +21,25 @@ import java.util.ArrayList;
 
     public Post crearPost(NotificacionSocial notificacion){
         NewPostNotification not = (NewPostNotification) notificacion;
-        Celebridad celebridad = searchCelebrrity(not.getCelebId());
-        Post post = new Post(celebridad,not.getContenido(),postConsecutive++);
-        celebridad.addPost(post);
+        Celebrity celebrity = searchCelebrrity(not.getCelebId());
+        Post post = new Post(celebrity,not.getContenido(),postConsecutive++);
+        celebrity.addPost(post);
         posts.add(post);
         return post;
     }
 
-    public Celebridad agregarCelebridad(String nombre){//Se envia el id que asigne esta clase o el servidor
-        Celebridad celebridad = new Celebridad(nombre, celebridadConsecutive++);
-        celebridades.add(celebridad);
-        return celebridad;
+    public Celebrity agregarCelebridad(String nombre){//Se envia el id que asigne esta clase o el servidor
+        Celebrity celebrity = new Celebrity(nombre, celebridadConsecutive++);
+        celebridades.add(celebrity);
+        return celebrity;
     }
     
-    public Seguidor agregarSeguidor(Celebridad celebridad,int id){//Se puede asignar un id como nulo hasta que sea asignado por el servidor
-        Seguidor seg = searchSeguidor(id);
+    public Follower agregarSeguidor(Celebrity celebrity, int id){//Se puede asignar un id como nulo hasta que sea asignado por el servidor
+        Follower seg = searchSeguidor(id);
         if (seg.equals(null)) {
-            seg = new Seguidor();//Aca es la asignacion del id
+            seg = new Follower();//Aca es la asignacion del id
         }
-        celebridad.addFollower(seg);
+        celebrity.addFollower(seg);
         seguidores.add(seg);
         return seg;
     }
@@ -50,21 +52,21 @@ import java.util.ArrayList;
     
     public void addFollower(NotificacionSocial notification){
         PostNotification not = (PostNotification)notification;
-        Celebridad celebridad = searchCelebrrity(not.getPostId());
-        agregarSeguidor(celebridad,not.getClientId());
+        Celebrity celebrity = searchCelebrrity(not.getPostId());
+        agregarSeguidor(celebrity,not.getClientId());
     }
     
-    public Seguidor searchSeguidor(int id){
-        for (Seguidor seguidore : seguidores) {
+    public Follower searchSeguidor(int id){
+        for (Follower seguidore : seguidores) {
             if(seguidore.getId() == id)
                 return seguidore;
         }
         return null;
     }
     
-    public Celebridad searchCelebrrity(int id){
+    public Celebrity searchCelebrrity(int id){
         Post post = searchPost(id);
-        for (Celebridad celebridade : celebridades) {
+        for (Celebrity celebridade : celebridades) {
             if(post.isAutor(celebridade))
                 return celebridade;
         }

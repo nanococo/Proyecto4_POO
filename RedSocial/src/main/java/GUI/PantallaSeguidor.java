@@ -6,9 +6,8 @@
 package GUI;
 
 import App.AccountTypes;
-import Networking.ClientSide.Client;
 import App.Post;
-import App.Seguidor;
+import Networking.ClientSide.Client;
 
 /**
  *

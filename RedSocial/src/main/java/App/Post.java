@@ -1,11 +1,12 @@
 package App;
 
+import App.Accounts.Celebrity;
 import App.Notifications.NotificacionesRedSocial;
 
 public class Post {
 
     private int id;
-    private Celebridad autor;
+    private Celebrity autor;
     private String contenido;
     private int likes;
     final int NOTIFICAR = 2;
@@ -13,7 +14,7 @@ public class Post {
 
 
 
-    Post(Celebridad autor,String contenido,int id){
+    Post(Celebrity autor, String contenido, int id){
         this.contenido = contenido;
         this.likes = 0;
         this.id = id;
@@ -42,7 +43,7 @@ public class Post {
         return this.id;
     }
     
-    public boolean isAutor(Celebridad celebridad){
-        return autor == celebridad;
+    public boolean isAutor(Celebrity celebrity){
+        return autor == celebrity;
     }
 }

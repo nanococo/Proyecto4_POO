@@ -7,15 +7,15 @@ import Observer.ISubject;
 
 import java.util.ArrayList;
 
-public class Celebridad implements ISubject{
+public class Celebrity implements ISubject{
 
     ArrayList<Post> posts;
     ArrayList<IObserver> seguidores;
     final int NOTIFICAR = 2;
-    String nombre;
+    public String nombre;
     int id;//Con el cual es buscado por el servidor
 
-    Celebridad(String nombre,int id){
+    public Celebrity(String nombre, int id){
         this.nombre = nombre;
         this.posts = new ArrayList<Post>();
         this.seguidores = new ArrayList<IObserver>();
