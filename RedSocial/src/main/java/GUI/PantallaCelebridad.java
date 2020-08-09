@@ -3,7 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaapplication6;
+package GUI;
+
+import App.AccountTypes;
+import Networking.ClientSide.Client;
+
+import javax.swing.*;
 
 /**
  *
@@ -14,6 +19,8 @@ public class PantallaCelebridad extends javax.swing.JFrame {
     /**
      * Creates new form PantallaCelebridad
      */
+    static Client client;
+
     public PantallaCelebridad() {
         initComponents();
     }
@@ -83,6 +90,13 @@ public class PantallaCelebridad extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        client.sendHelloToClient();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+
     /**
      * @param args the command line arguments
      */
@@ -109,6 +123,8 @@ public class PantallaCelebridad extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PantallaCelebridad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+
+        client = new Client("127.0.0.1", 7800, AccountTypes.CELEBRITY);
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

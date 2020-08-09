@@ -3,13 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaapplication6;
+package GUI;
+
+import App.AccountTypes;
+import Networking.ClientSide.Client;
 
 /**
  *
  * @author Fernando Alvarez
  */
 public class PantallaSeguidor extends javax.swing.JFrame {
+
+
+    static Client client;
 
     /**
      * Creates new form PantallaRedSocial
@@ -123,6 +129,8 @@ public class PantallaSeguidor extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+
+        client = new Client("127.0.0.1", 7800, AccountTypes.FOLLOWER);
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

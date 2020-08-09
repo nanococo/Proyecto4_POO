@@ -1,5 +1,6 @@
-package App;
+package App.Accounts;
 
+import App.Post;
 import Observer.IObserver;
 import Observer.ISubject;
 
