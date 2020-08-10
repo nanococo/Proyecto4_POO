@@ -1,7 +1,8 @@
-package Subastas;
+package App;
 
 import Observer.IObserver;
 import Observer.ISubject;
+import Subastas.Subasta;
 
 import java.util.ArrayList;
 
