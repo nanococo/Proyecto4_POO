@@ -1,8 +1,7 @@
-package Subastas;
+package App;
 
-import Observer.Notification;
 
-public class NotificacionSubasta extends Notification {
+public class NotificacionSubasta  {
 
     NotificacionSubasta(){
 

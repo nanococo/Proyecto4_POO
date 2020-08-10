@@ -2,7 +2,7 @@ package App;
 
 import Observer.IObserver;
 import Observer.ISubject;
-import Subastas.Subasta;
+import App.Subasta;
 
 import java.util.ArrayList;
 
@@ -31,23 +31,7 @@ public class Subastador implements IObserver, ISubject {
 
     }
 
-    @Override
-    public void update() {
 
-    }
 
-    @Override
-    public void addObserver() {
 
-    }
-
-    @Override
-    public void notifyAllSubs() {
-
-    }
-
-    @Override
-    public void notifySub(IObserver observer) {
-        observer.update();
-    }
 }

@@ -1,4 +1,4 @@
-package Subastas;
+package App;
 
 public class Oferente {
 }
