@@ -1,15 +1,22 @@
 package App;
 
-import Observer.IObserver;
-import Observer.ISubject;
-import App.Subasta;
 
 import java.util.ArrayList;
 
-public class Subastador implements IObserver, ISubject {
+public class Subastador {
 
-    Subasta subasta;
-    ArrayList<IObserver> oferentes;
+    ArrayList<Subasta> misSubastas;//Enviados al subastador
+    String nombre;
+
+    public ArrayList<Subasta> getMisSubastas() {
+        return misSubastas;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+    
+    
 
     public void aceptarOferta(){
 
@@ -26,12 +33,5 @@ public class Subastador implements IObserver, ISubject {
     public void cancelarSubasta(){
 
     }
-
-    public void enviarResultadoDeSubasta(){
-
-    }
-
-
-
 
 }

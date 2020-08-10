@@ -6,18 +6,25 @@
 package GUI;
 
 import App.Articulo;
+import App.Notification.NotificationType;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Fernando Alvarez
  */
-public class PantallaSubastador extends javax.swing.JFrame {
+    
+
+public class PantallaSubastador extends javax.swing.JFrame implements SubastaFrame{
 
     /**
      * Creates new form PantallaSubastador
      */
+    InfoSubasta subastaActual;
+    
     public PantallaSubastador() {
         initComponents();
+        recibirNotificacionSubasta(100, 366);
     }
 
     /**
@@ -29,18 +36,15 @@ public class PantallaSubastador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listSubastas = new javax.swing.JList<>();
         btnNuevaSubasta = new javax.swing.JButton();
         btnCerrarSubasta = new javax.swing.JButton();
         btnCancelarSubasta = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDescription = new javax.swing.JTextArea();
         lblImagen = new javax.swing.JLabel();
+        btnMisSubastas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jScrollPane1.setViewportView(listSubastas);
 
         btnNuevaSubasta.setText("Nueva Subasta");
         btnNuevaSubasta.addActionListener(new java.awt.event.ActionListener() {
@@ -57,11 +61,23 @@ public class PantallaSubastador extends javax.swing.JFrame {
         });
 
         btnCancelarSubasta.setText("Cancelar Subasta");
+        btnCancelarSubasta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarSubastaActionPerformed(evt);
+            }
+        });
 
         txtDescription.setEditable(false);
         txtDescription.setColumns(5);
         txtDescription.setRows(5);
         jScrollPane2.setViewportView(txtDescription);
+
+        btnMisSubastas.setText("Mis Subastas");
+        btnMisSubastas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMisSubastasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,52 +85,66 @@ public class PantallaSubastador extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnNuevaSubasta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(btnNuevaSubasta, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnCerrarSubasta, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnCancelarSubasta))
-                        .addComponent(jScrollPane2))
-                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnCerrarSubasta, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancelarSubasta)
                 .addGap(10, 10, 10))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnMisSubastas)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
+                .addComponent(btnMisSubastas)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNuevaSubasta)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnCancelarSubasta)
-                        .addComponent(btnCerrarSubasta)))
-                .addContainerGap(8, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnNuevaSubasta)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnCancelarSubasta)
+                                .addComponent(btnCerrarSubasta)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCerrarSubastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSubastaActionPerformed
-        // TODO add your handling code here:
+        // Se cierra la subasta y se entrega al que dio el tope mas alto
     }//GEN-LAST:event_btnCerrarSubastaActionPerformed
 
     private void btnNuevaSubastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaSubastaActionPerformed
         PantallaCreacionSubasta pantalla = new PantallaCreacionSubasta(this);
         pantalla.setVisible(true);
     }//GEN-LAST:event_btnNuevaSubastaActionPerformed
+
+    private void btnCancelarSubastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarSubastaActionPerformed
+        // Las subasta se cierra y termina sin nadie llevandose el objeto
+    }//GEN-LAST:event_btnCancelarSubastaActionPerformed
+
+    private void btnMisSubastasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMisSubastasActionPerformed
+        PantallaSubastas pantallaSubasta = new PantallaSubastas(this,"Mis Subastas");
+        pantallaSubasta.setVisible(true);
+    }//GEN-LAST:event_btnMisSubastasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,15 +185,40 @@ public class PantallaSubastador extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarSubasta;
     private javax.swing.JButton btnCerrarSubasta;
+    private javax.swing.JButton btnMisSubastas;
     private javax.swing.JButton btnNuevaSubasta;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblImagen;
-    private javax.swing.JList<String> listSubastas;
     private javax.swing.JTextArea txtDescription;
     // End of variables declaration//GEN-END:variables
 
     public void creandoSubasta(Articulo articulo) {
-        //Se crea una subasta con el articulo
+        //Se envia el articulo al servidor para que se cree una subasta con el
+    }
+    
+    public void seleccionarSubasta(){
+        
+    }
+    
+    @Override
+    public void mostrarSubasta(InfoSubasta subasta){
+        this.txtDescription.setText(subasta.toString());
+        mostrarImagen();
+    }
+
+    private void mostrarImagen() {
+        
+    }
+    
+    public boolean recibirNotificacionSubasta(int valor,int id){
+        String[] options = {"Aceptar", "Rechazar"};
+        int x = JOptionPane.showOptionDialog(null, "Nueva oferta para subasta#"+id+" por "+valor,
+                "Nueva Oferta",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        if(x == 0)
+            System.out.println(options[x]);
+        else
+            System.out.println(options[x]);
+        return true;
     }
 }
