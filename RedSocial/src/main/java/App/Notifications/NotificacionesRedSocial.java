@@ -1,6 +1,7 @@
 package App.Notifications;
 
-public enum NotificacionesRedSocial {
+public enum
+NotificacionesRedSocial {
 
     LIKE,
     SUBSCRIPTION,

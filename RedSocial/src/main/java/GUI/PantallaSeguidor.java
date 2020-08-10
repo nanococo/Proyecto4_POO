@@ -9,6 +9,8 @@ import App.AccountTypes;
 import App.Post;
 import Networking.ClientSide.Client;
 
+import javax.swing.*;
+
 /**
  *
  * @author Fernando Alvarez
@@ -16,7 +18,7 @@ import Networking.ClientSide.Client;
 public class PantallaSeguidor extends javax.swing.JFrame {
 
 
-    static Client client;
+    private Client client;
 
     /**
      * Creates new form PantallaRedSocial
@@ -25,6 +27,7 @@ public class PantallaSeguidor extends javax.swing.JFrame {
     
     public PantallaSeguidor() {
         initComponents();
+        client = new Client("127.0.0.1", 7800, AccountTypes.FOLLOWER, this);
     }
 
     /**
@@ -127,82 +130,29 @@ public class PantallaSeguidor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        Post post = askForNext();
-        if(post != null)
-            setPost(post);
+        client.getNextPost();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
-        Post post = askForPrev();
-        if(post != null)
-            setPost(post);
+        client.getPrevPost();
     }//GEN-LAST:event_btnPrevActionPerformed
 
     private void btnLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLikeActionPerformed
-        //Send data id del post es enviado a servidor con la instruccion like
+        client.like();
+        if(!lblLikes.getText().isEmpty()){
+            lblLikes.setText(String.valueOf(Integer.parseInt(lblLikes.getText())+1));
+        }
     }//GEN-LAST:event_btnLikeActionPerformed
 
     private void btnFollowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFollowActionPerformed
         //Send data id del post es enviado a servidor con la instruccion follow
-        client.follow();
+        client.follow(lblPostAutor.getText());
     }//GEN-LAST:event_btnFollowActionPerformed
 
-    private void setPost(Post post){
-        this.currentPostId = post.getId();
-        txtPost.setText(post.getContent());
-        lblLikes.setText(String.valueOf(post.getLikes()));
-        lblPostAutor.setText(post.getNombreAutor());//Dudas con el autor
-    }
-    
-    private Post askForNext() {
-        //Receive data recibe por default el 0 despues envia el current y le devuelven el que sigue si es el ultimo retorna el 0
-
-        return null;
-    }
-
-    private Post askForPrev() {
-        //Recieve data
-        return null;
-    }
-    
-    
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaSeguidor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaSeguidor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaSeguidor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaSeguidor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        client = new Client("127.0.0.1", 7800, AccountTypes.FOLLOWER);
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaSeguidor().setVisible(true);
-            }
-        });
+    public void setPost(String content, String authorName, String likes){
+        txtPost.setText(content);
+        lblLikes.setText(likes);
+        lblPostAutor.setText(authorName);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -214,6 +164,12 @@ public class PantallaSeguidor extends javax.swing.JFrame {
     private javax.swing.JLabel lblLikes;
     private javax.swing.JLabel lblPostAutor;
     private javax.swing.JTextArea txtPost;
+
     // End of variables declaration//GEN-END:variables
+
+
+    public void createAlert(String content){
+        JOptionPane.showMessageDialog(null, content);
+    }
 
 }

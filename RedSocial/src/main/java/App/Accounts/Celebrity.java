@@ -2,52 +2,69 @@ package App.Accounts;
 
 import App.Post;
 import App.Notifications.NotificacionesRedSocial;
+import Networking.Messages.GenericMessage;
+import Networking.Messages.MessageKeys;
 import Observer.IObserver;
 import Observer.ISubject;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class Celebrity implements ISubject {
 
-    ArrayList<Post> posts;
-    ArrayList<Follower> seguidores;
+    private final ArrayList<Post> posts = new ArrayList<>();
+    private final ArrayList<Follower> followers = new ArrayList<>();
+    private final ObjectOutputStream outputStream;
+    private final ObjectInputStream inputStream;
 
-    final int NOTIFICAR = 2;
-    public String nombre;
-    int id;//Con el cual es buscado por el servidor
+    private final String name;
 
-    public Celebrity(String nombre, int id){
-        this.nombre = nombre;
-        this.posts = new ArrayList<>();
-        this.seguidores = new ArrayList<>();
-        this.id = id;
+    public Celebrity(ObjectInputStream inputStream, ObjectOutputStream outputStream, String name){
+        this.inputStream = inputStream;
+        this.outputStream = outputStream;
+        this.name = name;
     }
 
-    public void addPost(Post post){
-        posts.add(post);
+
+    public String getName() {
+        return name;
     }
+
 
     public void darseDeBaja(){
 
     }
 
-    public void addFollower(IObserver observer){
-        //this.seguidores.add(observer);
-        if(reachedXFollowers())
-            notifyAllSubs(NotificacionesRedSocial.VIPFOLLOWERS);
+    public ArrayList<Post> getPosts() {
+        return posts;
+    }
+
+    public void addFollower(Follower follower){
+        this.followers.add(follower);
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.UPDATE_FOLLOWERS_COUNT, String.valueOf(followers.size())));
+            if(reachedXFollowers())
+                notifyAllSubs(NotificacionesRedSocial.VIPFOLLOWERS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean reachedXFollowers(){
-        return seguidores.size()%2 == 0;
+        return followers.size()%2 == 0;
     }
 
 
+    @Override
     public void addObserver(IObserver observer) {
         //this.seguidores.add(observer);
     }
 
+    @Override
     public void notifyAllSubs(NotificacionesRedSocial tipo) {
-        for (IObserver observer:seguidores){
+        for (IObserver observer: followers){
             observer.update(tipo);//Se avisa a todos los observers y estos usan el servidor para enviar el tipo de notificacion
         }
     }

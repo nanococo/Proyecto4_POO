@@ -4,7 +4,7 @@ import Messaging.BaseMessage;
 
 public class GenericMessage extends BaseMessage {
 
-    String[] params;
+    private final String[] params;
 
     public GenericMessage(String key, String... params) {
         super(key);

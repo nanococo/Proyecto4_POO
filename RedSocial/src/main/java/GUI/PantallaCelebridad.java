@@ -20,10 +20,14 @@ public class PantallaCelebridad extends javax.swing.JFrame {
      * Creates new form PantallaCelebridad
      */
     static Client client;
+    private final String nickName;
 
     //Tiene un nombre, la conexion genera el id aleatorio
     
-    public PantallaCelebridad() {
+    public PantallaCelebridad(String nickName) {
+        this.nickName = nickName;
+        System.out.println(nickName);
+        client = new Client("127.0.0.1", 7800, AccountTypes.CELEBRITY, this);
         initComponents();
     }
 
@@ -98,53 +102,21 @@ public class PantallaCelebridad extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String contenido = jTextField1.getText();
-        if(!contenido.isEmpty()){
-            //sendData
-            jTextField1.setText("");
-        }
+        client.post(jTextField1.getText(), nickName);
+        jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void updateSubs(){
-        int subs = 7; //receive data
-        this.lblSubs.setText(String.valueOf(subs));
+
+    public void updateSubs(String subs){
+        this.lblSubs.setText(subs);
     }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaCelebridad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaCelebridad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaCelebridad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaCelebridad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        client = new Client("127.0.0.1", 7800, AccountTypes.CELEBRITY);
+    public String getNickName() {
+        return nickName;
+    }
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaCelebridad().setVisible(true);
-            }
-        });
+    public void createAlert(String content){
+        JOptionPane.showMessageDialog(null, content);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

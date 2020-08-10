@@ -28,11 +28,6 @@
             <version>1.0</version>
             <systemPath>${basedir}\src\lib\DynamicMsg.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>DynamicMsg</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
 </project>
