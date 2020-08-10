@@ -25,6 +25,7 @@ public class PantallaCelebridad extends javax.swing.JFrame {
     //Tiene un nombre, la conexion genera el id aleatorio
     
     public PantallaCelebridad(String nickName) {
+        this.setTitle(nickName);
         this.nickName = nickName;
         System.out.println(nickName);
         client = new Client("127.0.0.1", 7800, AccountTypes.CELEBRITY, this);
