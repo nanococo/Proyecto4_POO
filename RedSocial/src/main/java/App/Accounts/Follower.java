@@ -1,7 +1,7 @@
 package App.Accounts;
 
-import App.Notifications.*;
 import App.Post;
+import Messaging.IMessage;
 import Networking.Messages.GenericMessage;
 import Networking.Messages.MessageKeys;
 import Networking.ServerSide.Server;
@@ -58,13 +58,11 @@ public class Follower implements IObserver {
         }
     }
 
-    public void update(NotificacionesRedSocial tipo) {
-        switch(tipo){
-            case VIPFOLLOWERS:
-                NotificationManager.sendNotification(new VipFollowersNotification());
-                break;
-            case POSTLIKES:
-                NotificationManager.sendNotification(new PostLikesNotification());
+    public void update(IMessage message) {
+        try {
+            outputStream.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
