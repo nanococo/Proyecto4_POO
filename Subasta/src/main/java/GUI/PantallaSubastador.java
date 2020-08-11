@@ -32,6 +32,11 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
         //recibirNotificacionSubasta(100, 366);
     }
 
+    PantallaSubastador(String nickName) {
+        initComponents();
+        recibirNotificacionSubasta(100, 366);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
