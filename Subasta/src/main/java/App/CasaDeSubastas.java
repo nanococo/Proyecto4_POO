@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class CasaDeSubastas {
 
     static ArrayList<Subasta> subastas;//Enviadas a todos los clientes
-    ArrayList<Subastador> subastadores;
+    ArrayList<Auctioneer> subastadores;
     static int currentSubastaId;
 
     public static void addSubasta(Subasta sub) {
@@ -23,7 +23,7 @@ public class CasaDeSubastas {
     
     public Subasta getSubasta(InfoSubasta info){
         for (Subasta subasta : subastas) {
-            if(info.getId() == subasta.id){
+            if(info.getId() == subasta.getId()){
                 return subasta;
             }
         }

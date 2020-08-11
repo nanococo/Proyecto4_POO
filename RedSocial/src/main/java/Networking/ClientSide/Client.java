@@ -13,13 +13,12 @@ import java.net.Socket;
 
 public class Client {
 
-    private Socket socket;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
 
     public Client(String ip, int port, AccountTypes accountType, JFrame window){
         try {
-            this.socket = new Socket(ip, port);
+            Socket socket = new Socket(ip, port);
             this.outputStream = new ObjectOutputStream(socket.getOutputStream());
             this.inputStream = new ObjectInputStream(socket.getInputStream());
 

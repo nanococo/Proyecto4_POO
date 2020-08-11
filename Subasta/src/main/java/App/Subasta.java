@@ -1,6 +1,5 @@
 package App;
 
-import App.Subastador;
 import GUI.InfoSubasta;
 import Observer.IObserver;
 import Observer.ISubject;
@@ -8,22 +7,20 @@ import java.util.ArrayList;
 
 public class Subasta implements ISubject{
     
-    Subastador subastador;
-    Articulo articulo;
-    int tope;
-    Oferente mejorPuja;
-    ArrayList<Oferente> oferentes;
-    int id;
-    EstadoSubasta estado;
+    private final Auctioneer auctioneer;
+    private final Articulo articulo;
+    private int tope;
+    private Oferente mejorPuja;
+    private final ArrayList<Oferente> oferentes = new ArrayList<>();
+    private int id;
+    private EstadoSubasta estado;
 
-    public Subasta(Subastador subastador,Articulo articulo,int id) {
-
+    public Subasta(Auctioneer auctioneer, Articulo articulo, int id) {
         this.id = id;
-        this.subastador = subastador;
+        this.auctioneer = auctioneer;
         this.articulo = articulo;
         this.tope = articulo.precio;
         this.estado = EstadoSubasta.ACTIVA;
-        
     }
     
     public void enviarResultadoDeSubasta(){
@@ -32,6 +29,10 @@ public class Subasta implements ISubject{
 
     public void actualizarSubasta(){
         //Notify
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setTope(int tope) {
@@ -67,7 +68,7 @@ public class Subasta implements ISubject{
     }
     
     public InfoSubasta toInfo(){
-        return new InfoSubasta(articulo, tope, estado.toString(), subastador.getNombre(), id);
+        return new InfoSubasta(articulo, tope, estado.toString(), auctioneer.getName(), id);
     }
     
 }

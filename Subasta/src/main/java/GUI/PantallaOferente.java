@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import App.Notification.AccountTypes;
+import Networking.ClientSide.Client;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -16,9 +19,12 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     /**
      * Creates new form PantallaOferente
      */
-    InfoSubasta subastaActual;//Current subasta
+    private InfoSubasta subastaActual;//Current subasta
+    private Client client;
+
     
     public PantallaOferente() {
+        this.client = new Client("127.0.0.1", 7800, AccountTypes.BUYER, this);
         initComponents();
         showNotification("Se actualizo el precio de la subasta #2");
     }

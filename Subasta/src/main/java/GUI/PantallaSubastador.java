@@ -6,8 +6,10 @@
 package GUI;
 
 import App.Articulo;
-import App.Notification.NotificationType;
-import javax.swing.JOptionPane;
+import App.Notification.AccountTypes;
+import Networking.ClientSide.Client;
+
+import javax.swing.*;
 
 /**
  *
@@ -20,11 +22,14 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
     /**
      * Creates new form PantallaSubastador
      */
-    InfoSubasta subastaActual;
+    private InfoSubasta subastaActual;
+
+    private Client client;
     
     public PantallaSubastador() {
         initComponents();
-        recibirNotificacionSubasta(100, 366);
+        this.client = new Client("127.0.0.1", 7800, AccountTypes.AUCTIONEER, this);
+        //recibirNotificacionSubasta(100, 366);
     }
 
     /**
@@ -146,42 +151,6 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
         pantallaSubasta.setVisible(true);
     }//GEN-LAST:event_btnMisSubastasActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaSubastador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaSubastador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaSubastador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaSubastador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaSubastador().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarSubasta;
     private javax.swing.JButton btnCerrarSubasta;
@@ -194,6 +163,7 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
 
     public void creandoSubasta(Articulo articulo) {
         //Se envia el articulo al servidor para que se cree una subasta con el
+        client.createAuction(articulo);
     }
     
     public void seleccionarSubasta(){

@@ -20,5 +20,16 @@
         </plugins>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>DynamicMsg</groupId>
+            <artifactId>DynamicMsg</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}\src\lib\DynamicMsg.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+
 
 </project>

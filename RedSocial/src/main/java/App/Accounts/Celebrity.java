@@ -34,7 +34,7 @@ public class Celebrity implements ISubject {
 
 
     public void darseDeBaja(){
-
+        
     }
 
     public ArrayList<Post> getPosts() {
