@@ -57,7 +57,7 @@ public class Celebrity implements ISubject {
     }
 
     public boolean reachedXFollowers(){
-        return followers.size()%3 == 0;
+        return followers.size()%10 == 0;
     }
 
 
