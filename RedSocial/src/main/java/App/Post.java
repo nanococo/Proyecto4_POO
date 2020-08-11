@@ -1,7 +1,8 @@
 package App;
 
 import App.Accounts.Celebrity;
-import App.Notifications.NotificacionesRedSocial;
+import Networking.Messages.GenericMessage;
+import Networking.Messages.MessageKeys;
 
 public class Post {
 
@@ -20,12 +21,15 @@ public class Post {
     }
 
     public boolean reachedXLikes(){
-        return likes%2 == 0;
+        return likes%10 == 0;
     }
 
     public void incLike(){
         likes++;
-        if(reachedXLikes()) author.sendNotification(NotificacionesRedSocial.POSTLIKES);
+        if(reachedXLikes()){
+            System.out.println("LIKES REACHED");
+            author.notifyAllSubs(new GenericMessage(MessageKeys.SEND_ALERT, "true",MessageKeys.TARGET_FOLLOWER, author.getName()+" post has reached "+this.likes+" likes!"));
+        }
     }
 
     public String getAuthorName() {
@@ -35,8 +39,4 @@ public class Post {
     public int getLikes(){return  this.likes;}
 
     public String getContent(){return this.content;}
-    
-    public boolean isAutor(Celebrity celebrity){
-        return author == celebrity;
-    }
 }

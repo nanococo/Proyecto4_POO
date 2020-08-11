@@ -15,7 +15,6 @@ import java.net.Socket;
 public class Listener extends Thread {
 
     private final Server server;
-    private final Socket clientSocket;
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
     private Follower follower;
@@ -23,7 +22,6 @@ public class Listener extends Thread {
 
     public Listener(Server server, Socket clientSocket) throws IOException {
         this.server = server;
-        this.clientSocket = clientSocket;
         this.outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         this.inputStream = new ObjectInputStream(clientSocket.getInputStream());
     }
@@ -66,8 +64,13 @@ public class Listener extends Thread {
                             target = MessageKeys.TARGET_FOLLOWER;
                             genericMessage = (GenericMessage) message;
                             Celebrity celebrity = server.searchCelebrity(genericMessage.getParams()[0]);
-                            celebrity.addFollower(follower);
-                            outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "Followed Celebrity Successfully"));
+                            if(!celebrity.hasFollower(follower)){
+                                celebrity.addFollower(follower);
+                                outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "Followed Celebrity Successfully"));
+                            } else {
+                                outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "You already follow this celebrity!"));
+                            }
+
                         }
                         break;
 
@@ -94,7 +97,6 @@ public class Listener extends Thread {
                             target = MessageKeys.TARGET_FOLLOWER;
                             post = server.getPosts().get(follower.getCurrentPostIndex());
                             post.incLike();
-                            outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true", target, "Liked Post Successfully"));
                         }
                         break;
 

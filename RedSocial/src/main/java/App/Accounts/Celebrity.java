@@ -1,7 +1,7 @@
 package App.Accounts;
 
 import App.Post;
-import App.Notifications.NotificacionesRedSocial;
+import Messaging.IMessage;
 import Networking.Messages.GenericMessage;
 import Networking.Messages.MessageKeys;
 import Observer.IObserver;
@@ -46,14 +46,18 @@ public class Celebrity implements ISubject {
         try {
             outputStream.writeObject(new GenericMessage(MessageKeys.UPDATE_FOLLOWERS_COUNT, String.valueOf(followers.size())));
             if(reachedXFollowers())
-                notifyAllSubs(NotificacionesRedSocial.VIPFOLLOWERS);
+                notifyAllSubs(new GenericMessage(MessageKeys.SEND_ALERT, "true",MessageKeys.TARGET_FOLLOWER, this.name+" has reached "+this.followers.size()+" followers!"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public boolean hasFollower(Follower follower){
+        return followers.contains(follower);
+    }
+
     public boolean reachedXFollowers(){
-        return followers.size()%2 == 0;
+        return followers.size()%10 == 0;
     }
 
 
@@ -63,15 +67,9 @@ public class Celebrity implements ISubject {
     }
 
     @Override
-    public void notifyAllSubs(NotificacionesRedSocial tipo) {
+    public void notifyAllSubs(IMessage message) {
         for (IObserver observer: followers){
-            observer.update(tipo);//Se avisa a todos los observers y estos usan el servidor para enviar el tipo de notificacion
+            observer.update(message);//Se avisa a todos los observers y estos usan el servidor para enviar el tipo de notificacion
         }
     }
-
-    
-    public void sendNotification(NotificacionesRedSocial tipo){
-        notifyAllSubs(tipo);
-    }
-
 }
