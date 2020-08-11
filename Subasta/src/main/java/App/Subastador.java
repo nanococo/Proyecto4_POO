@@ -15,15 +15,18 @@ public class Subastador {
     public String getNombre() {
         return nombre;
     }
-    
-    
 
-    public void aceptarOferta(){
-
+    public void aceptarOferta(int idSubasta,int tope,int clientId){
+        for (Subasta subasta:misSubastas){
+            if(subasta.id == idSubasta)
+                subasta.aceptarOferta(clientId,tope);
+        }
     }
 
-    public void subastar(Subasta subasta){
-
+    public void subastar(Articulo articulo){
+        Subasta sub = new Subasta(this,articulo,CasaDeSubastas.getCurrentSubastaId());
+        misSubastas.add(sub);
+        CasaDeSubastas.addSubasta(sub);
     }
 
     public void cerrarSubasta(){

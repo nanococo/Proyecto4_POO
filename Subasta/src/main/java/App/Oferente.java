@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Oferente implements IObserver{
     
     ArrayList<Subasta> subastas;
+    public int id;
 
     @Override
     public void update() {

@@ -5,8 +5,13 @@ import java.util.ArrayList;
 
 public class CasaDeSubastas {
 
-    ArrayList<Subasta> subastas;//Enviadas a todos los clientes
+    static ArrayList<Subasta> subastas;//Enviadas a todos los clientes
     ArrayList<Subastador> subastadores;
+    static int currentSubastaId;
+
+    public static void addSubasta(Subasta sub) {
+        subastas.add(sub);
+    }
 
     public ArrayList<InfoSubasta> subastasAEnviar(){
         ArrayList<InfoSubasta> infoSubastas = new ArrayList<>();
@@ -23,5 +28,9 @@ public class CasaDeSubastas {
             }
         }
         return null;
+    }
+
+    public static int getCurrentSubastaId(){
+        return currentSubastaId++;
     }
 }

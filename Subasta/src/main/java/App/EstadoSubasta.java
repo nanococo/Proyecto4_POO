@@ -11,7 +11,9 @@ package App;
  */
  enum EstadoSubasta {
     
-     ACTIVO
+     ACTIVA,
+    CANCELADA,
+    CERRADA
      
     /* @Override
     public String toString(){

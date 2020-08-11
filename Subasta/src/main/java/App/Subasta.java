@@ -16,16 +16,39 @@ public class Subasta implements ISubject{
     int id;
     EstadoSubasta estado;
 
-    public Subasta(Subastador subastador,Articulo articulo) {
-        
+    public Subasta(Subastador subastador,Articulo articulo,int id) {
+
+        this.id = id;
         this.subastador = subastador;
         this.articulo = articulo;
         this.tope = articulo.precio;
+        this.estado = EstadoSubasta.ACTIVA;
         
     }
     
     public void enviarResultadoDeSubasta(){
-        
+        //Notify
+    }
+
+    public void actualizarSubasta(){
+        //Notify
+    }
+
+    public void setTope(int tope) {
+        this.tope = tope;
+    }
+
+    public void setMejorPuja(Oferente mejorPuja) {
+        this.mejorPuja = mejorPuja;
+    }
+
+    public void aceptarOferta(int idCliente,int cantidad){
+        for (Oferente ofer:oferentes){
+            if(ofer.id == idCliente)
+                setMejorPuja(ofer);
+        }
+        setTope(cantidad);
+        //ActualizarSubasta Notifica
     }
 
     @Override
