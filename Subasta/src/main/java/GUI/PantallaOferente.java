@@ -6,8 +6,14 @@ import Networking.ClientSide.Client;
 
 import javax.swing.JOptionPane;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -22,6 +28,7 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     private final Client client;
     private ArrayList<AuctionsInfo> auctionsInfos = new ArrayList<>();
     private final String id = UUID.randomUUID().toString();
+    String path = System.getProperty("user.dir")+"/src/main/resources/";
 
     
     public PantallaOferente() {
@@ -228,9 +235,19 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
         this.currentAuctionInfo = auctionsInfo;
         this.txtDisplayInfo.setText(auctionsInfo.toString());
         this.txtDisplayInfo.setDisabledTextColor(Color.BLACK);
+        cargarImagen(auctionsInfo.getProduct().getImagePath());
     }
     
-    public void showNotification(String string){
+    public void showNotification(String string){//Usar para cualquier tipo de mensaje del subastador
         JOptionPane.showMessageDialog(this, string);
+    }
+
+    public void cargarImagen(String filename){
+            File file = new File(path+filename);
+        try {
+            this.lblImagen.setIcon(new ImageIcon(ImageIO.read(file)));
+        } catch (IOException ex) {
+            Logger.getLogger(PantallaOferente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
