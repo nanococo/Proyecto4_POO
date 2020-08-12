@@ -14,7 +14,7 @@ public class Auction implements ISubject {
     
     private final Auctioneer auctioneer;
     private final Product product;
-    private int tope;
+    private int topBid;
     private Buyer highestBidder;
     private final ArrayList<Buyer> buyers = new ArrayList<>();
     private final AuctionStatus auctionStatus;
@@ -23,7 +23,7 @@ public class Auction implements ISubject {
     public Auction(Auctioneer auctioneer, Product product) {
         this.auctioneer = auctioneer;
         this.product = product;
-        this.tope = product.getPrice();
+        this.topBid = product.getPrice();
         this.auctionStatus = AuctionStatus.ACTIVE;
     }
     
@@ -51,25 +51,24 @@ public class Auction implements ISubject {
         return auctioneer.getName();
     }
 
-    public void setTope(int tope) {
-        this.tope = tope;
+    public void setTopBid(int topBid) {
+        this.topBid = topBid;
     }
 
     public void setHighestBidder(Buyer highestBidder) {
         this.highestBidder = highestBidder;
     }
 
-    public void aceptarOferta(int idCliente,int cantidad){
-        for (Buyer ofer: buyers){
-            if(ofer.id == idCliente)
-                setHighestBidder(ofer);
-        }
-        setTope(cantidad);
-        //ActualizarSubasta Notifica
+    public void acceptBid(String bid){
+        setTopBid(Integer.parseInt(bid));
+    }
+
+    public boolean validateBidAmount(String amount){
+        return Integer.parseInt(amount)> topBid;
     }
     
     public AuctionsInfo getAuctionInfo(){
-        return new AuctionsInfo(product, tope, auctionStatus.toString(), auctioneer.getName(), id);
+        return new AuctionsInfo(product, topBid, auctionStatus.toString(), auctioneer.getName(), id);
     }
 
     @Override
@@ -79,6 +78,17 @@ public class Auction implements ISubject {
 
     @Override
     public void notifyAllSubs(IMessage message) {
+        for (Buyer buyer : buyers) {
+            buyer.sendMessage(message);
+        }
+    }
 
+    public boolean isBuyerInAuction(String buyerId) {
+        for (Buyer buyer : buyers) {
+            if(buyer.getId().equals(buyerId)){
+                return true;
+            }
+        }
+        return false;
     }
 }

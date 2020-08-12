@@ -12,6 +12,7 @@ import Networking.ClientSide.Client;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  *
@@ -28,13 +29,13 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
 
     private final Client client;
     private final String nickName;
-    private ArrayList<AuctionsInfo> auctionsInfos;
+    private ArrayList<AuctionsInfo> auctionsInfos = new ArrayList<>();
+    private final String id = UUID.randomUUID().toString();
 
     PantallaSubastador(String nickName) {
         initComponents();
         this.nickName = nickName;
         this.client = new Client("127.0.0.1", 7800, AccountTypes.AUCTIONEER, this);
-        //recibirNotificacionSubasta(100, 366);
     }
 
     /**
@@ -138,8 +139,20 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public ArrayList<AuctionsInfo> getAuctionsInfos() {
+        return auctionsInfos;
+    }
+
+    public void setAuctionsInfos(ArrayList<AuctionsInfo> auctionsInfos) {
+        this.auctionsInfos = auctionsInfos;
+    }
+
     public String getNickName() {
         return nickName;
+    }
+
+    public String getId() {
+        return id;
     }
 
     private void btnCerrarSubastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSubastaActionPerformed
@@ -156,6 +169,10 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
     }//GEN-LAST:event_btnCancelarSubastaActionPerformed
 
     private void btnMisSubastasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMisSubastasActionPerformed
+
+        client.getAuctioneerAuctions(nickName);
+        try{Thread.sleep(1000);}catch (Exception e){ e.printStackTrace(); }
+
         PantallaSubastas pantallaSubasta = new PantallaSubastas(this,"Mis Subastas");
         pantallaSubasta.setVisible(true);
     }//GEN-LAST:event_btnMisSubastasActionPerformed

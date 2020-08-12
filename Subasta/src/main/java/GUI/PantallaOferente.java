@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import App.Accounts.AccountTypes;
@@ -12,6 +7,7 @@ import Networking.ClientSide.Client;
 import javax.swing.JOptionPane;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  *
@@ -24,7 +20,8 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
      */
     private AuctionsInfo currentAuctionInfo;//Current subasta
     private final Client client;
-    private ArrayList<AuctionsInfo> auctionsInfos;
+    private ArrayList<AuctionsInfo> auctionsInfos = new ArrayList<>();
+    private final String id = UUID.randomUUID().toString();
 
     
     public PantallaOferente() {
@@ -145,6 +142,10 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
         return auctionsInfos;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public void setAuctionsInfos(ArrayList<AuctionsInfo> auctionsInfos) {
         this.auctionsInfos = auctionsInfos;
     }
@@ -176,7 +177,7 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
 
         if(isNumeric(bid)){
             if(currentAuctionInfo !=null){
-                client.addBid(bid, currentAuctionInfo.getId());
+                client.addBid(bid, currentAuctionInfo.getId(), id);
             } else {
                 showNotification("Choose an Auction first");
             }
@@ -201,6 +202,11 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     private void btnMisSubastasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMisSubastasActionPerformed
         //Pide todas las subastas del oferente
         //Parecido al getNext pero recibe una lista
+
+        client.getBuyerAuctions();
+
+        try{Thread.sleep(1000);}catch (Exception e){ e.printStackTrace(); }
+
         PantallaSubastas ps = new PantallaSubastas(this,"Mis Subastas");
         ps.setVisible(true);
     }//GEN-LAST:event_btnMisSubastasActionPerformed

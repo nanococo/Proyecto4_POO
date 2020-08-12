@@ -2,6 +2,7 @@ package Networking.ClientSide;
 
 import GUI.PantallaOferente;
 import GUI.PantallaSubastador;
+import Messages.AuctioneerAuctionsContainer;
 import Messages.AuctionsContainer;
 import Messages.GenericMessage;
 import Messages.MessageKeys;
@@ -67,6 +68,13 @@ public class ServerListener extends Thread {
                     case MessageKeys.SHOW_AUCTION_PROPOSAL:
                         genericMessage = (GenericMessage) message;
                         ((PantallaSubastador) window).getNotificationFromNewBid(genericMessage.getParams()[1], genericMessage.getParams()[0]);
+                        break;
+
+                    case MessageKeys.AUCTIONEER_AUCTION_CONTAINER:
+                        assert window instanceof PantallaSubastador;
+                        assert message instanceof AuctioneerAuctionsContainer;
+
+                        ((PantallaSubastador) window).setAuctionsInfos(((AuctioneerAuctionsContainer) message).getAuctionsInfo());
                         break;
                 }
 

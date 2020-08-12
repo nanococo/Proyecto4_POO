@@ -2,6 +2,7 @@ package Networking.ClientSide;
 
 import App.Product;
 import App.Accounts.AccountTypes;
+import GUI.PantallaOferente;
 import GUI.PantallaSubastador;
 import Messages.GenericMessage;
 import Messages.MessageKeys;
@@ -27,7 +28,7 @@ public class Client {
 
             switch (accountType){
                 case BUYER:
-                    outputStream.writeObject(new GenericMessage(MessageKeys.SET_CLIENT_TYPE, MessageKeys.TARGET_BUYER));
+                    outputStream.writeObject(new GenericMessage(MessageKeys.SET_CLIENT_TYPE, MessageKeys.TARGET_BUYER, ((PantallaOferente) window).getId()));
                     break;
                 case AUCTIONEER:
                     outputStream.writeObject(new GenericMessage(MessageKeys.SET_CLIENT_TYPE, MessageKeys.TARGET_AUCTIONEER, ((PantallaSubastador) window).getNickName()));
@@ -63,9 +64,9 @@ public class Client {
         }
     }
 
-    public void addBid(String bid, String id) {
+    public void addBid(String bid, String id, String buyerId) {
         try {
-            outputStream.writeObject(new GenericMessage(MessageKeys.ADD_BID, id, bid));
+            outputStream.writeObject(new GenericMessage(MessageKeys.ADD_BID, id, bid, buyerId));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,6 +75,22 @@ public class Client {
     public void approveOffer(String id, String newBid) {
         try {
             outputStream.writeObject(new GenericMessage(MessageKeys.APPROVE_BID, id, newBid));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getAuctioneerAuctions(String nickName) {
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.GET_AUCTIONEER_AUCTIONS, nickName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getBuyerAuctions() {
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.GET_BUYER_AUCTIONS));
         } catch (IOException e) {
             e.printStackTrace();
         }

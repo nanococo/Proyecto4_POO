@@ -52,7 +52,7 @@ public class Server {
 
     public Auction findAuction(String id) {
         for (Auction auction : auctions) {
-            if (auction.getId().equals(id)){
+            if (auction.getId().equals(id)) {
                 return auction;
             }
         }

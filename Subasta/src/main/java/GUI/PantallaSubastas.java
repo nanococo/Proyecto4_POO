@@ -23,7 +23,15 @@ public class PantallaSubastas extends javax.swing.JFrame implements ListSelectio
     
     public PantallaSubastas(SubastaFrame pantalla, String title){
         initComponents();
-        this.auctionsInfos = ((PantallaOferente) pantalla).getAuctionsInfos();
+
+        if(pantalla instanceof PantallaOferente){
+            this.auctionsInfos = ((PantallaOferente) pantalla).getAuctionsInfos();
+        } else {
+            this.auctionsInfos = ((PantallaSubastador) pantalla).getAuctionsInfos();
+        }
+
+
+
         this.pantalla = pantalla;
         this.setTitle(title);
 
