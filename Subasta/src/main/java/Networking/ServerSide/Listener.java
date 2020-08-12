@@ -86,7 +86,7 @@ public class Listener extends Thread {
                     case MessageKeys.APPROVE_BID:
                         genericMessage = (GenericMessage) message;
                         auction = server.findAuction(genericMessage.getParams()[0]);
-                        auction.aceptarOferta();
+                        //auction.aceptarOferta();TODOO
                         break;
                 }
 

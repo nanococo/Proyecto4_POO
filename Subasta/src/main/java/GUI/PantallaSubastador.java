@@ -9,9 +9,14 @@ import App.Product;
 import App.Accounts.AccountTypes;
 import Messages.AuctionsInfo;
 import Networking.ClientSide.Client;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -29,6 +34,7 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
     private final Client client;
     private final String nickName;
     private ArrayList<AuctionsInfo> auctionsInfos;
+    String path = System.getProperty("user.dir")+"/src/main/resources/";
 
     PantallaSubastador(String nickName) {
         initComponents();
@@ -182,11 +188,7 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
     @Override
     public void showAuction(AuctionsInfo subasta){
         this.txtDescription.setText(subasta.toString());
-        mostrarImagen();
-    }
-
-    private void mostrarImagen() {
-        
+        cargarImagen(subasta.getProduct().getImagePath());
     }
     
     public void getNotificationFromNewBid(String valor, String id){
@@ -209,4 +211,17 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
     public void showNotification(String string){
         JOptionPane.showMessageDialog(this, string);
     }
+    
+    
+    public void cargarImagen(String filename){
+            File file = new File(path+filename);
+        try {
+            this.lblImagen.setIcon(new ImageIcon(ImageIO.read(file)));
+        } catch (IOException ex) {
+            Logger.getLogger(PantallaOferente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    
 }
