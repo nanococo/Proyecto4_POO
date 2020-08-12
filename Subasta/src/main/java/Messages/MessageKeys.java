@@ -7,6 +7,7 @@ public class MessageKeys {
     public static final String SEND_ALERT = "sendAlert";
     public static final String GET_AUCTIONS = "getAuctions";
     public static final String AUCTION_CONTAINER = "auctionContainer";
+    public static final String FOLLOW_AUCTION = "followAuction";
 
     //Target types
     public static final String TARGET_BUYER = "buyer";

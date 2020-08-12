@@ -49,4 +49,13 @@ public class Server {
         }
         return null;
     }
+
+    public Auction findAuction(String id) {
+        for (Auction auction : auctions) {
+            if (auction.getId().equals(id)){
+                return auction;
+            }
+        }
+        return null;
+    }
 }

@@ -5,7 +5,6 @@
  */
 package GUI;
 
-import App.Auction;
 import Messages.AuctionsInfo;
 
 import java.util.ArrayList;
@@ -97,7 +96,7 @@ public class PantallaSubastas extends javax.swing.JFrame implements ListSelectio
     public void selectSubasta(int index){
         //Con los id guardados manda a llamar al servidor con el id selecionado
         //Y los datos recibidos los muestra en la pantalla principal
-        pantalla.mostrarSubasta(auctionsInfos.get(index));
+        pantalla.showAuction(auctionsInfos.get(index));
         System.out.println(index);
         dispose();
     }

@@ -1,11 +1,11 @@
 package Observer;
 
+import Messaging.IMessage;
+
 public interface ISubject {
-    
-    public void notifyAllObservers();
-    
-    public void notifyOne(IObserver oberver);
-    
-    public void addObserver();
-    
+
+    void addObserver(IObserver observer);
+
+    void notifyAllSubs(IMessage message);
+
 }

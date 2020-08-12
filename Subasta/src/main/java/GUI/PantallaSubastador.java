@@ -180,7 +180,7 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
     }
     
     @Override
-    public void mostrarSubasta(AuctionsInfo subasta){
+    public void showAuction(AuctionsInfo subasta){
         this.txtDescription.setText(subasta.toString());
         mostrarImagen();
     }

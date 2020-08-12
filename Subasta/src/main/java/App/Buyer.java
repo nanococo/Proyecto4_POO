@@ -1,5 +1,6 @@
 package App;
 
+import Messaging.IMessage;
 import Networking.ServerSide.Server;
 import Observer.IObserver;
 
@@ -22,13 +23,8 @@ public class Buyer implements IObserver, Serializable {
         this.server = server;
     }
 
-
-
     @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(IMessage message) {
+
     }
-    
-    
-    
 }

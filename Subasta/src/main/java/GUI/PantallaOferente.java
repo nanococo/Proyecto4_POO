@@ -22,7 +22,7 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     /**
      * Creates new form PantallaOferente
      */
-    private AuctionsInfo subastaActual;//Current subasta
+    private AuctionsInfo currentAuctionInfo;//Current subasta
     private final Client client;
     private ArrayList<AuctionsInfo> auctionsInfos;
 
@@ -152,6 +152,9 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     private void btnUnirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnirseActionPerformed
         //Se une a una subasta ahora puede ofrecer si quiere o no pero siemore  se le avisa si alguien gana
         //Parecido al follow de red social
+        if(currentAuctionInfo !=null){
+            client.subscribeToAuction(currentAuctionInfo.getId());
+        }
     }//GEN-LAST:event_btnUnirseActionPerformed
 
     private void btnOfrecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOfrecerActionPerformed
@@ -190,8 +193,9 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void mostrarSubasta(AuctionsInfo subasta) {
-        this.txtDisplayInfo.setText(subasta.toString());
+    public void showAuction(AuctionsInfo auctionsInfo) {
+        this.currentAuctionInfo = auctionsInfo;
+        this.txtDisplayInfo.setText(auctionsInfo.toString());
         this.txtDisplayInfo.setDisabledTextColor(Color.BLACK);
     }
     

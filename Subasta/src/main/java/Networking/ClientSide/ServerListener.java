@@ -44,7 +44,7 @@ public class ServerListener extends Thread {
                             if(genericMessage.getParams()[0].equals("true")){
                                 pantallaSubastador.showNotification(genericMessage.getParams()[2]);
                             } else {
-                                pantallaSubastador.showNotification(genericMessage.getParams()[3]);
+                                 pantallaSubastador.showNotification(genericMessage.getParams()[3]);
                             }
                         } else {
                             pantallaOferente = (PantallaOferente) window;

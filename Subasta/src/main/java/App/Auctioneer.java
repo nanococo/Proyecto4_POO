@@ -12,7 +12,6 @@ public class Auctioneer {
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
 
-
     public Auctioneer(ObjectInputStream inputStream, ObjectOutputStream outputStream, String name) {
         this.name = name;
         this.outputStream = outputStream;

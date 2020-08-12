@@ -54,4 +54,12 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    public void subscribeToAuction(String id) {
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.FOLLOW_AUCTION, id));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -36,6 +36,7 @@ public class Listener extends Thread {
                 IMessage message = (IMessage) inputStream.readObject();
                 GenericMessage genericMessage;
                 Product product;
+                Auction auction;
 
 
                 switch (message.getKey()) {
@@ -51,18 +52,28 @@ public class Listener extends Thread {
                             server.getAuctioneers().add(auctioneer);
                         }
                         break;
+
                     case MessageKeys.PRODUCT:
                         product = (Product) message;
                         target = MessageKeys.TARGET_AUCTIONEER;
                         Auctioneer auctioneer = server.searchAuctioneer(product.getOwnerName());
-                        Auction auction = new Auction(auctioneer, product);
+                        auction = new Auction(auctioneer, product);
                         auctioneer.getAuctions().add(auction);
                         server.getAuctions().add(auction);
 
                         outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "Auction Created Successfully"));
                         break;
+
                     case MessageKeys.GET_AUCTIONS:
                         outputStream.writeObject(new AuctionsContainer(server.getAuctions()));
+                        break;
+
+                    case MessageKeys.FOLLOW_AUCTION:
+                        target = MessageKeys.TARGET_BUYER;
+                        genericMessage = (GenericMessage) message;
+                        auction = server.findAuction(genericMessage.getParams()[0]);
+                        auction.addBuyer(buyer);
+                        outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "You are now following "+auction.getAuthor()+" auction!"));
                         break;
                 }
 
