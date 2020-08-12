@@ -1,8 +1,8 @@
 package Networking.ServerSide;
 
 import App.Auction;
-import App.Auctioneer;
-import App.Buyer;
+import App.Accounts.Auctioneer;
+import App.Accounts.Buyer;
 
 import java.io.IOException;
 import java.net.ServerSocket;

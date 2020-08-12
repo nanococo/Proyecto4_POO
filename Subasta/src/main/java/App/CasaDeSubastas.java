@@ -1,5 +1,6 @@
 package App;
 
+import App.Accounts.Auctioneer;
 import Messages.AuctionsInfo;
 import java.util.ArrayList;
 

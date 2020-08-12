@@ -1,5 +1,7 @@
 package App;
 
+import App.Accounts.Auctioneer;
+import App.Accounts.Buyer;
 import Messages.AuctionsInfo;
 import Messaging.IMessage;
 import Observer.IObserver;
@@ -39,6 +41,10 @@ public class Auction implements ISubject {
 
     public String getId() {
         return id;
+    }
+
+    public Auctioneer getAuctioneer() {
+        return auctioneer;
     }
 
     public String getAuthor(){

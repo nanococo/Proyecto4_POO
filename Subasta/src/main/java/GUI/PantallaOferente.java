@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import App.Notification.AccountTypes;
+import App.Accounts.AccountTypes;
 import Messages.AuctionsInfo;
 import Networking.ClientSide.Client;
 
@@ -149,6 +149,18 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
         this.auctionsInfos = auctionsInfos;
     }
 
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
     private void btnUnirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnirseActionPerformed
         //Se une a una subasta ahora puede ofrecer si quiere o no pero siemore  se le avisa si alguien gana
         //Parecido al follow de red social
@@ -160,6 +172,19 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     private void btnOfrecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOfrecerActionPerformed
         //Envia al servidor el monto ofrecido de la subasta seleccionada
         //Parecido al like pero enviando una cantidad
+        String bid = txtOfrecer.getText();
+
+        if(isNumeric(bid)){
+            if(currentAuctionInfo !=null){
+                client.addBid(bid, currentAuctionInfo.getId());
+            } else {
+                showNotification("Choose an Auction first");
+            }
+        } else {
+            showNotification("Your bid is not numeric!");
+        }
+
+
     }//GEN-LAST:event_btnOfrecerActionPerformed
 
     private void btnVerSubastasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerSubastasActionPerformed

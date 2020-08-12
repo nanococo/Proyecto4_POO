@@ -1,7 +1,7 @@
 package Networking.ClientSide;
 
 import App.Product;
-import App.Notification.AccountTypes;
+import App.Accounts.AccountTypes;
 import GUI.PantallaSubastador;
 import Messages.GenericMessage;
 import Messages.MessageKeys;
@@ -58,6 +58,22 @@ public class Client {
     public void subscribeToAuction(String id) {
         try {
             outputStream.writeObject(new GenericMessage(MessageKeys.FOLLOW_AUCTION, id));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addBid(String bid, String id) {
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.ADD_BID, id, bid));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void approveOffer(String id, String newBid) {
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.APPROVE_BID, id, newBid));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -63,6 +63,11 @@ public class ServerListener extends Thread {
                         System.out.println("Got Auctions Info");
                         ((PantallaOferente) window).setAuctionsInfos(((AuctionsContainer) message).getAuctionsInfo());
                         break;
+
+                    case MessageKeys.SHOW_AUCTION_PROPOSAL:
+                        genericMessage = (GenericMessage) message;
+                        ((PantallaSubastador) window).getNotificationFromNewBid(genericMessage.getParams()[1], genericMessage.getParams()[0]);
+                        break;
                 }
 
             } catch (IOException | ClassNotFoundException e){

@@ -1,8 +1,8 @@
 package Networking.ServerSide;
 
 import App.Auction;
-import App.Auctioneer;
-import App.Buyer;
+import App.Accounts.Auctioneer;
+import App.Accounts.Buyer;
 import App.Product;
 import Messages.AuctionsContainer;
 import Messages.GenericMessage;
@@ -74,6 +74,19 @@ public class Listener extends Thread {
                         auction = server.findAuction(genericMessage.getParams()[0]);
                         auction.addBuyer(buyer);
                         outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "You are now following "+auction.getAuthor()+" auction!"));
+                        break;
+
+                    case MessageKeys.ADD_BID:
+                        target = MessageKeys.TARGET_BUYER;
+                        genericMessage = (GenericMessage) message;
+                        auction = server.findAuction(genericMessage.getParams()[0]);
+                        auction.getAuctioneer().showOfferToAuctioneer(genericMessage.getParams()[0], genericMessage.getParams()[1]);
+                        break;
+
+                    case MessageKeys.APPROVE_BID:
+                        genericMessage = (GenericMessage) message;
+                        auction = server.findAuction(genericMessage.getParams()[0]);
+                        auction.aceptarOferta();
                         break;
                 }
 

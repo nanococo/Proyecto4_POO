@@ -1,5 +1,6 @@
-package App;
+package App.Accounts;
 
+import App.Auction;
 import Messaging.IMessage;
 import Networking.ServerSide.Server;
 import Observer.IObserver;

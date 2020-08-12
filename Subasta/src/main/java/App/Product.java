@@ -8,8 +8,6 @@ package App;
 import Messages.MessageKeys;
 import Messaging.BaseMessage;
 
-import java.util.UUID;
-
 /**
  *
  * @author Fernando Alvarez
