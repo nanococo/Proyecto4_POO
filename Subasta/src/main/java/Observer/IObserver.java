@@ -1,7 +1,8 @@
 package Observer;
 
+import Messaging.IMessage;
+
 public interface IObserver {
-    
-    public void update();
-    
+
+    void update(IMessage message);
 }

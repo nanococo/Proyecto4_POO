@@ -6,7 +6,7 @@
 package GUI;
 
 import App.Product;
-import App.Notification.AccountTypes;
+import App.Accounts.AccountTypes;
 import Messages.AuctionsInfo;
 import Networking.ClientSide.Client;
 
@@ -180,7 +180,7 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
     }
     
     @Override
-    public void mostrarSubasta(AuctionsInfo subasta){
+    public void showAuction(AuctionsInfo subasta){
         this.txtDescription.setText(subasta.toString());
         mostrarImagen();
     }
@@ -189,16 +189,21 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
         
     }
     
-    public boolean recibirNotificacionSubasta(int valor,int id){
+    public void getNotificationFromNewBid(String valor, String id){
         String[] options = {"Aceptar", "Rechazar"};
-        int x = JOptionPane.showOptionDialog(null, "Nueva oferta para subasta#"+id+" por "+valor,
+        int x = JOptionPane.showOptionDialog(null,
+                "Nueva oferta para subasta#"+id+" por "+valor,
                 "Nueva Oferta",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-        if(x == 0)
-            System.out.println(options[x]);
-        else
-            System.out.println(options[x]);
-        return true;
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]
+        );
+
+
+        if(x==0){
+            System.out.println("Aceptado");
+            client.approveOffer(id, valor);
+        } else {
+            System.out.println("Denegado");
+        }
     }
 
     public void showNotification(String string){

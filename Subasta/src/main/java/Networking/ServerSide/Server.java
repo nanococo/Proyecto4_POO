@@ -1,8 +1,8 @@
 package Networking.ServerSide;
 
 import App.Auction;
-import App.Auctioneer;
-import App.Buyer;
+import App.Accounts.Auctioneer;
+import App.Accounts.Buyer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -46,6 +46,15 @@ public class Server {
     public Auctioneer searchAuctioneer(String name) {
         for (Auctioneer auctioneer : auctioneers) {
             if(auctioneer.getName().equals(name)) return auctioneer;
+        }
+        return null;
+    }
+
+    public Auction findAuction(String id) {
+        for (Auction auction : auctions) {
+            if (auction.getId().equals(id)){
+                return auction;
+            }
         }
         return null;
     }

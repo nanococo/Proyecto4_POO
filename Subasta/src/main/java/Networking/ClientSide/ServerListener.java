@@ -44,7 +44,7 @@ public class ServerListener extends Thread {
                             if(genericMessage.getParams()[0].equals("true")){
                                 pantallaSubastador.showNotification(genericMessage.getParams()[2]);
                             } else {
-                                pantallaSubastador.showNotification(genericMessage.getParams()[3]);
+                                 pantallaSubastador.showNotification(genericMessage.getParams()[3]);
                             }
                         } else {
                             pantallaOferente = (PantallaOferente) window;
@@ -62,6 +62,11 @@ public class ServerListener extends Thread {
 
                         System.out.println("Got Auctions Info");
                         ((PantallaOferente) window).setAuctionsInfos(((AuctionsContainer) message).getAuctionsInfo());
+                        break;
+
+                    case MessageKeys.SHOW_AUCTION_PROPOSAL:
+                        genericMessage = (GenericMessage) message;
+                        ((PantallaSubastador) window).getNotificationFromNewBid(genericMessage.getParams()[1], genericMessage.getParams()[0]);
                         break;
                 }
 

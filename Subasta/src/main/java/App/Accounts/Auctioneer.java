@@ -1,6 +1,12 @@
-package App;
+package App.Accounts;
 
 
+import App.Auction;
+import App.Product;
+import Messages.GenericMessage;
+import Messages.MessageKeys;
+
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -11,7 +17,6 @@ public class Auctioneer {
     private final String name;
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
-
 
     public Auctioneer(ObjectInputStream inputStream, ObjectOutputStream outputStream, String name) {
         this.name = name;
@@ -46,6 +51,14 @@ public class Auctioneer {
 
     public void cancelarSubasta(){
 
+    }
+
+    public void showOfferToAuctioneer(String id, String amount){
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.SHOW_AUCTION_PROPOSAL, id, amount));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

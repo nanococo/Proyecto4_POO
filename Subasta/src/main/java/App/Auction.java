@@ -1,6 +1,9 @@
 package App;
 
+import App.Accounts.Auctioneer;
+import App.Accounts.Buyer;
 import Messages.AuctionsInfo;
+import Messaging.IMessage;
 import Observer.IObserver;
 import Observer.ISubject;
 
@@ -32,6 +35,21 @@ public class Auction implements ISubject {
         //Notify
     }
 
+    public void addBuyer(Buyer buyer){
+        buyers.add(buyer);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Auctioneer getAuctioneer() {
+        return auctioneer;
+    }
+
+    public String getAuthor(){
+        return auctioneer.getName();
+    }
 
     public void setTope(int tope) {
         this.tope = tope;
@@ -49,24 +67,18 @@ public class Auction implements ISubject {
         setTope(cantidad);
         //ActualizarSubasta Notifica
     }
-
-    @Override
-    public void notifyAllObservers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void notifyOne(IObserver oberver) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void addObserver() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public AuctionsInfo getAuctionInfo(){
         return new AuctionsInfo(product, tope, auctionStatus.toString(), auctioneer.getName(), id);
     }
-    
+
+    @Override
+    public void addObserver(IObserver observer) {
+
+    }
+
+    @Override
+    public void notifyAllSubs(IMessage message) {
+
+    }
 }

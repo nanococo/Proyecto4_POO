@@ -39,6 +39,10 @@ public class AuctionsInfo implements Serializable {
         return nickSubastador;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String toString(){
         return nickSubastador+"'s Auction\n"+
                         "Status: "+estado+

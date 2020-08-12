@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import App.Notification.AccountTypes;
+import App.Accounts.AccountTypes;
 import Messages.AuctionsInfo;
 import Networking.ClientSide.Client;
 
@@ -22,7 +22,7 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     /**
      * Creates new form PantallaOferente
      */
-    private AuctionsInfo subastaActual;//Current subasta
+    private AuctionsInfo currentAuctionInfo;//Current subasta
     private final Client client;
     private ArrayList<AuctionsInfo> auctionsInfos;
 
@@ -149,14 +149,42 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
         this.auctionsInfos = auctionsInfos;
     }
 
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
     private void btnUnirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnirseActionPerformed
         //Se une a una subasta ahora puede ofrecer si quiere o no pero siemore  se le avisa si alguien gana
         //Parecido al follow de red social
+        if(currentAuctionInfo !=null){
+            client.subscribeToAuction(currentAuctionInfo.getId());
+        }
     }//GEN-LAST:event_btnUnirseActionPerformed
 
     private void btnOfrecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOfrecerActionPerformed
         //Envia al servidor el monto ofrecido de la subasta seleccionada
         //Parecido al like pero enviando una cantidad
+        String bid = txtOfrecer.getText();
+
+        if(isNumeric(bid)){
+            if(currentAuctionInfo !=null){
+                client.addBid(bid, currentAuctionInfo.getId());
+            } else {
+                showNotification("Choose an Auction first");
+            }
+        } else {
+            showNotification("Your bid is not numeric!");
+        }
+
+
     }//GEN-LAST:event_btnOfrecerActionPerformed
 
     private void btnVerSubastasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerSubastasActionPerformed
@@ -190,8 +218,9 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void mostrarSubasta(AuctionsInfo subasta) {
-        this.txtDisplayInfo.setText(subasta.toString());
+    public void showAuction(AuctionsInfo auctionsInfo) {
+        this.currentAuctionInfo = auctionsInfo;
+        this.txtDisplayInfo.setText(auctionsInfo.toString());
         this.txtDisplayInfo.setDisabledTextColor(Color.BLACK);
     }
     

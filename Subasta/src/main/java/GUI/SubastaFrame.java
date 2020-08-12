@@ -13,6 +13,6 @@ import Messages.AuctionsInfo;
  */
 public interface SubastaFrame {
     
-    public void mostrarSubasta(AuctionsInfo subasta);
+    void showAuction(AuctionsInfo subasta);
     
 }

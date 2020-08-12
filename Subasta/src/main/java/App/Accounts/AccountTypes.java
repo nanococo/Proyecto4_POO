@@ -1,4 +1,4 @@
-package App.Notification;
+package App.Accounts;
 
 public enum AccountTypes {
     BUYER,

@@ -16,10 +16,5 @@ import java.io.Serializable;
     ACTIVE,
     CANCELADA,
     CERRADA
-     
-    /* @Override
-    public String toString(){
-       return ""; 
-    }*/
     
 }
