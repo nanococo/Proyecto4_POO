@@ -5,8 +5,9 @@
  */
 package GUI;
 
-import App.Articulo;
-import java.awt.event.MouseEvent;
+import App.Auction;
+import Messages.AuctionsInfo;
+
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -18,35 +19,16 @@ import javax.swing.event.ListSelectionListener;
 public class PantallaSubastas extends javax.swing.JFrame implements ListSelectionListener{
 
     
-    ArrayList<InfoSubasta> subastas;
+    private ArrayList<AuctionsInfo> auctionsInfos;
     SubastaFrame pantalla;
     
-    public PantallaSubastas() {
+    public PantallaSubastas(SubastaFrame pantalla, String title){
         initComponents();
-        subastas = new ArrayList<>();
-        //Test
-        Articulo a1 = new Articulo("Telfono", "xd", 1500);
-        Articulo a3 = new Articulo("Telfono", "xd", 1200);
-        Articulo a4 = new Articulo("Sombrero", "xd", 800);
-        subastas.add(new InfoSubasta(a1,1500,"activo","Juan",2));
-        subastas.add(new InfoSubasta(a4,4000,"activo","Fabian",3));
-        subastas.add(new InfoSubasta(a3,2000,"activo","Marco",6));
-        setListInfo();
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    }
-    
-    public PantallaSubastas(SubastaFrame pantalla,String tittle){
-        initComponents();
-        subastas = new ArrayList<>();
+        this.auctionsInfos = ((PantallaOferente) pantalla).getAuctionsInfos();
         this.pantalla = pantalla;
-        this.setTitle(tittle);
-                //Test
-        Articulo a1 = new Articulo("Telfono", "xd", 1500);
-        Articulo a3 = new Articulo("Telfono", "xd", 1200);
-        Articulo a4 = new Articulo("Sombrero", "xd", 800);
-        subastas.add(new InfoSubasta(a1,1500,"activo","Juan",2));
-        subastas.add(new InfoSubasta(a4,4000,"activo","Fabian",3));
-        subastas.add(new InfoSubasta(a3,2000,"activo","Marco",6));
+        this.setTitle(title);
+
+
         setListInfo();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
@@ -92,41 +74,6 @@ public class PantallaSubastas extends javax.swing.JFrame implements ListSelectio
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaSubastas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaSubastas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaSubastas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaSubastas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaSubastas().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblText;
@@ -134,10 +81,10 @@ public class PantallaSubastas extends javax.swing.JFrame implements ListSelectio
     // End of variables declaration//GEN-END:variables
 
     public void setListInfo(){
-        String info[] = new String[subastas.size()];
-        for (int i = 0;i<subastas.size();i++) {
-            InfoSubasta subasta = subastas.get(i);
-            info[i] = subasta.articulo.getNombre()+subasta.pujaMasAlta+"Subasta #"+subasta.idSubasta+"Estado: "+subasta.estado;
+        String info[] = new String[auctionsInfos.size()];
+        for (int i = 0; i< auctionsInfos.size(); i++) {
+            AuctionsInfo subasta = auctionsInfos.get(i);
+            info[i] = subasta.getProduct().getName()+subasta.getPujaMasAlta()+" Estado: "+subasta.getEstado();
         }
             listSubastas.setListData(info);
             listSubastas.addListSelectionListener(this);
@@ -150,9 +97,8 @@ public class PantallaSubastas extends javax.swing.JFrame implements ListSelectio
     public void selectSubasta(int index){
         //Con los id guardados manda a llamar al servidor con el id selecionado
         //Y los datos recibidos los muestra en la pantalla principal
-        pantalla.mostrarSubasta(subastas.get(index));
+        pantalla.mostrarSubasta(auctionsInfos.get(index));
         System.out.println(index);
-        System.out.println("Hola");
         dispose();
     }
 

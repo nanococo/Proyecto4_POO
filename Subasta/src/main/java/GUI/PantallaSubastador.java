@@ -5,11 +5,13 @@
  */
 package GUI;
 
-import App.Articulo;
+import App.Product;
 import App.Notification.AccountTypes;
+import Messages.AuctionsInfo;
 import Networking.ClientSide.Client;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,19 +24,17 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
     /**
      * Creates new form PantallaSubastador
      */
-    private InfoSubasta subastaActual;
+    private AuctionsInfo subastaActual;
 
-    private Client client;
-    
-    public PantallaSubastador() {
-        initComponents();
-        this.client = new Client("127.0.0.1", 7800, AccountTypes.AUCTIONEER, this);
-        //recibirNotificacionSubasta(100, 366);
-    }
+    private final Client client;
+    private final String nickName;
+    private ArrayList<AuctionsInfo> auctionsInfos;
 
     PantallaSubastador(String nickName) {
         initComponents();
-        recibirNotificacionSubasta(100, 366);
+        this.nickName = nickName;
+        this.client = new Client("127.0.0.1", 7800, AccountTypes.AUCTIONEER, this);
+        //recibirNotificacionSubasta(100, 366);
     }
 
     /**
@@ -138,6 +138,10 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public String getNickName() {
+        return nickName;
+    }
+
     private void btnCerrarSubastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSubastaActionPerformed
         // Se cierra la subasta y se entrega al que dio el tope mas alto
     }//GEN-LAST:event_btnCerrarSubastaActionPerformed
@@ -166,9 +170,9 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
     private javax.swing.JTextArea txtDescription;
     // End of variables declaration//GEN-END:variables
 
-    public void creandoSubasta(Articulo articulo) {
+    public void creandoSubasta(Product product) {
         //Se envia el articulo al servidor para que se cree una subasta con el
-        client.createAuction(articulo);
+        client.createAuction(product);
     }
     
     public void seleccionarSubasta(){
@@ -176,7 +180,7 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
     }
     
     @Override
-    public void mostrarSubasta(InfoSubasta subasta){
+    public void mostrarSubasta(AuctionsInfo subasta){
         this.txtDescription.setText(subasta.toString());
         mostrarImagen();
     }
@@ -195,5 +199,9 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
         else
             System.out.println(options[x]);
         return true;
+    }
+
+    public void showNotification(String string){
+        JOptionPane.showMessageDialog(this, string);
     }
 }

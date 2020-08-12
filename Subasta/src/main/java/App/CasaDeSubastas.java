@@ -1,32 +1,32 @@
 package App;
 
-import GUI.InfoSubasta;
+import Messages.AuctionsInfo;
 import java.util.ArrayList;
 
 public class CasaDeSubastas {
 
-    static ArrayList<Subasta> subastas;//Enviadas a todos los clientes
+    static ArrayList<Auction> auctions;//Enviadas a todos los clientes
     ArrayList<Auctioneer> subastadores;
     static int currentSubastaId;
 
-    public static void addSubasta(Subasta sub) {
-        subastas.add(sub);
+    public static void addSubasta(Auction sub) {
+        auctions.add(sub);
     }
 
-    public ArrayList<InfoSubasta> subastasAEnviar(){
-        ArrayList<InfoSubasta> infoSubastas = new ArrayList<>();
-        for (Subasta subasta : subastas) {
-            infoSubastas.add(subasta.toInfo());
-        }
-        return infoSubastas;
+    public ArrayList<AuctionsInfo> subastasAEnviar(){
+        ArrayList<AuctionsInfo> auctionsInfos = new ArrayList<>();
+//        for (Auction auction : auctions) {
+//            infoSubastas.add(auction.toInfo());
+//        }
+        return auctionsInfos;
     }
     
-    public Subasta getSubasta(InfoSubasta info){
-        for (Subasta subasta : subastas) {
-            if(info.getId() == subasta.getId()){
-                return subasta;
-            }
-        }
+    public Auction getSubasta(AuctionsInfo info){
+//        for (Auction auction : auctions) {
+//            if(info.getId() == auction.getId()){
+//                return auction;
+//            }
+//        }
         return null;
     }
 

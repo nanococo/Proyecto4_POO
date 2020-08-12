@@ -1,11 +1,13 @@
 package Networking.ClientSide;
 
-import App.Articulo;
+import App.Product;
 import App.Notification.AccountTypes;
+import GUI.PantallaSubastador;
 import Messages.GenericMessage;
 import Messages.MessageKeys;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -28,9 +30,7 @@ public class Client {
                     outputStream.writeObject(new GenericMessage(MessageKeys.SET_CLIENT_TYPE, MessageKeys.TARGET_BUYER));
                     break;
                 case AUCTIONEER:
-                    //PantallaCelebridad celebrityScreen = (PantallaCelebridad) window;
-                    outputStream.writeObject(new GenericMessage(MessageKeys.SET_CLIENT_TYPE, MessageKeys.TARGET_AUCTIONEER));
-                    //outputStream.writeObject(new GenericMessage(MessageKeys.SET_CLIENT_TYPE, "celebrity", celebrityScreen.getNickName()));
+                    outputStream.writeObject(new GenericMessage(MessageKeys.SET_CLIENT_TYPE, MessageKeys.TARGET_AUCTIONEER, ((PantallaSubastador) window).getNickName()));
                     break;
             }
 
@@ -39,7 +39,19 @@ public class Client {
         }
     }
 
-    public void createAuction(Articulo articulo) {
+    public void createAuction(Product product) {
+        try {
+            outputStream.writeObject(product);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void getAllAuctions(){
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.GET_AUCTIONS));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

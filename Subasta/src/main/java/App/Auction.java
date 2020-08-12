@@ -1,26 +1,27 @@
 package App;
 
-import GUI.InfoSubasta;
+import Messages.AuctionsInfo;
 import Observer.IObserver;
 import Observer.ISubject;
-import java.util.ArrayList;
 
-public class Subasta implements ISubject{
+import java.util.ArrayList;
+import java.util.UUID;
+
+public class Auction implements ISubject {
     
     private final Auctioneer auctioneer;
-    private final Articulo articulo;
+    private final Product product;
     private int tope;
-    private Oferente mejorPuja;
-    private final ArrayList<Oferente> oferentes = new ArrayList<>();
-    private int id;
-    private EstadoSubasta estado;
+    private Buyer highestBidder;
+    private final ArrayList<Buyer> buyers = new ArrayList<>();
+    private final AuctionStatus auctionStatus;
+    private final String id = UUID.randomUUID().toString();
 
-    public Subasta(Auctioneer auctioneer, Articulo articulo, int id) {
-        this.id = id;
+    public Auction(Auctioneer auctioneer, Product product) {
         this.auctioneer = auctioneer;
-        this.articulo = articulo;
-        this.tope = articulo.precio;
-        this.estado = EstadoSubasta.ACTIVA;
+        this.product = product;
+        this.tope = product.getPrice();
+        this.auctionStatus = AuctionStatus.ACTIVE;
     }
     
     public void enviarResultadoDeSubasta(){
@@ -31,22 +32,19 @@ public class Subasta implements ISubject{
         //Notify
     }
 
-    public int getId() {
-        return id;
-    }
 
     public void setTope(int tope) {
         this.tope = tope;
     }
 
-    public void setMejorPuja(Oferente mejorPuja) {
-        this.mejorPuja = mejorPuja;
+    public void setHighestBidder(Buyer highestBidder) {
+        this.highestBidder = highestBidder;
     }
 
     public void aceptarOferta(int idCliente,int cantidad){
-        for (Oferente ofer:oferentes){
+        for (Buyer ofer: buyers){
             if(ofer.id == idCliente)
-                setMejorPuja(ofer);
+                setHighestBidder(ofer);
         }
         setTope(cantidad);
         //ActualizarSubasta Notifica
@@ -67,8 +65,8 @@ public class Subasta implements ISubject{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public InfoSubasta toInfo(){
-        return new InfoSubasta(articulo, tope, estado.toString(), auctioneer.getName(), id);
+    public AuctionsInfo getAuctionInfo(){
+        return new AuctionsInfo(product, tope, auctionStatus.toString(), auctioneer.getName(), id);
     }
     
 }

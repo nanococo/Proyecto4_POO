@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Auctioneer {
 
-    private final ArrayList<Subasta> auctions = new ArrayList<>(); //Enviados al subastador
+    private final ArrayList<Auction> auctions = new ArrayList<>(); //Enviados al subastador
     private final String name;
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
@@ -19,7 +19,7 @@ public class Auctioneer {
         this.inputStream = inputStream;
     }
 
-    public ArrayList<Subasta> getAuctions() {
+    public ArrayList<Auction> getAuctions() {
         return auctions;
     }
 
@@ -28,16 +28,16 @@ public class Auctioneer {
     }
 
     public void aceptarOferta(int idSubasta,int tope,int clientId){
-        for (Subasta subasta: auctions){
-            if(subasta.getId() == idSubasta)
-                subasta.aceptarOferta(clientId,tope);
-        }
+//        for (Auction auction : auctions){
+//            if(auction.getId() == idSubasta)
+//                auction.aceptarOferta(clientId,tope);
+//        }
     }
 
-    public void subastar(Articulo articulo){
-        Subasta sub = new Subasta(this,articulo,CasaDeSubastas.getCurrentSubastaId());
-        auctions.add(sub);
-        CasaDeSubastas.addSubasta(sub);
+    public void subastar(Product product){
+        //Auction sub = new Auction(this, product,CasaDeSubastas.getCurrentSubastaId());
+//        auctions.add(sub);
+//        CasaDeSubastas.addSubasta(sub);
     }
 
     public void cerrarSubasta(){

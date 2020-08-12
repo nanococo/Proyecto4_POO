@@ -5,13 +5,15 @@
  */
 package App;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Fernando Alvarez
  */
- enum EstadoSubasta {
-    
-     ACTIVA,
+ enum AuctionStatus {
+
+    ACTIVE,
     CANCELADA,
     CERRADA
      

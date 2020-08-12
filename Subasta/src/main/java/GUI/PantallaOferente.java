@@ -6,9 +6,12 @@
 package GUI;
 
 import App.Notification.AccountTypes;
+import Messages.AuctionsInfo;
 import Networking.ClientSide.Client;
 
 import javax.swing.JOptionPane;
+import java.awt.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,14 +22,15 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     /**
      * Creates new form PantallaOferente
      */
-    private InfoSubasta subastaActual;//Current subasta
-    private Client client;
+    private AuctionsInfo subastaActual;//Current subasta
+    private final Client client;
+    private ArrayList<AuctionsInfo> auctionsInfos;
 
     
     public PantallaOferente() {
         this.client = new Client("127.0.0.1", 7800, AccountTypes.BUYER, this);
         initComponents();
-        showNotification("Se actualizo el precio de la subasta #2");
+        //showNotification("Se actualizo el precio de la subasta #2");
     }
 
     /**
@@ -137,6 +141,14 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public ArrayList<AuctionsInfo> getAuctionsInfos() {
+        return auctionsInfos;
+    }
+
+    public void setAuctionsInfos(ArrayList<AuctionsInfo> auctionsInfos) {
+        this.auctionsInfos = auctionsInfos;
+    }
+
     private void btnUnirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnirseActionPerformed
         //Se une a una subasta ahora puede ofrecer si quiere o no pero siemore  se le avisa si alguien gana
         //Parecido al follow de red social
@@ -150,6 +162,10 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     private void btnVerSubastasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerSubastasActionPerformed
         //Pide todas las subastas del servidor
         //Parecido al getNext pero recibe una lista
+        client.getAllAuctions();
+
+        try{Thread.sleep(1000);}catch (Exception e){ e.printStackTrace(); }
+
         PantallaSubastas ps = new PantallaSubastas(this,"Subastas");
         ps.setVisible(true);
     }//GEN-LAST:event_btnVerSubastasActionPerformed
@@ -160,42 +176,6 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
         PantallaSubastas ps = new PantallaSubastas(this,"Mis Subastas");
         ps.setVisible(true);
     }//GEN-LAST:event_btnMisSubastasActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaOferente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaOferente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaOferente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaOferente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaOferente().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMisSubastas;
@@ -210,11 +190,12 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void mostrarSubasta(InfoSubasta subasta) {
+    public void mostrarSubasta(AuctionsInfo subasta) {
         this.txtDisplayInfo.setText(subasta.toString());
+        this.txtDisplayInfo.setDisabledTextColor(Color.BLACK);
     }
     
-    public void showNotification(String string/* o recibe el InfoSubasta*/){
+    public void showNotification(String string){
         JOptionPane.showMessageDialog(this, string);
     }
 }

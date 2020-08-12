@@ -1,6 +1,8 @@
 package Networking.ServerSide;
 
+import App.Auction;
 import App.Auctioneer;
+import App.Buyer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,6 +12,8 @@ public class Server {
 
     private ServerSocket serverSocket;
     private final ArrayList<Auctioneer> auctioneers = new ArrayList<>();
+    private final ArrayList<Auction> auctions = new ArrayList<>();
+    private final ArrayList<Buyer> buyers = new ArrayList<>();
 
 
     public Server(int port){
@@ -23,11 +27,26 @@ public class Server {
         }
     }
 
+    public ArrayList<Buyer> getBuyers() {
+        return buyers;
+    }
+
     public ArrayList<Auctioneer> getAuctioneers() {
         return auctioneers;
     }
 
+    public ArrayList<Auction> getAuctions() {
+        return auctions;
+    }
+
     public ServerSocket getServerSocket() {
         return serverSocket;
+    }
+
+    public Auctioneer searchAuctioneer(String name) {
+        for (Auctioneer auctioneer : auctioneers) {
+            if(auctioneer.getName().equals(name)) return auctioneer;
+        }
+        return null;
     }
 }

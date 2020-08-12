@@ -9,7 +9,7 @@ import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import App.Articulo;
+import App.Product;
 
 /**
  *
@@ -118,9 +118,9 @@ public class PantallaCreacionSubasta extends javax.swing.JFrame {
         if(data.isEmpty())
             JOptionPane.showMessageDialog(this, "Faltan datos", "Error", JOptionPane.ERROR_MESSAGE);
         else{
-            precio = Integer.valueOf(data);
-            pantallaSubastador.creandoSubasta(new Articulo(name,pathFile,precio));
-            this.setVisible(false);
+            precio = Integer.parseInt(data);
+            pantallaSubastador.creandoSubasta(new Product(name,pathFile,precio, pantallaSubastador.getNickName()));
+            this.dispose();
         }
             
     }//GEN-LAST:event_btnCrearActionPerformed

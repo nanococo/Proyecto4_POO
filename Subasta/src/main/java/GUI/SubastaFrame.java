@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import javax.swing.event.ListSelectionListener;
+import Messages.AuctionsInfo;
 
 /**
  *
@@ -13,6 +13,6 @@ import javax.swing.event.ListSelectionListener;
  */
 public interface SubastaFrame {
     
-    public void mostrarSubasta(InfoSubasta subasta);
+    public void mostrarSubasta(AuctionsInfo subasta);
     
 }
