@@ -83,4 +83,12 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    public void goDown() {
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.GO_DOWN));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -11,6 +11,7 @@ public class MessageKeys {
     public static final String PREV_POST = "prevPost";
     public static final String LIKE = "like";
     public static final String UPDATE_FOLLOWERS_COUNT= "updateFollowersCount";
+    public static final String GO_DOWN = "goDown";
 
 
 

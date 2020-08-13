@@ -58,6 +58,11 @@ public class PantallaCelebridad extends javax.swing.JFrame {
         });
 
         jButton2.setText("Darse de baja");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Followers");
 
@@ -105,6 +110,10 @@ public class PantallaCelebridad extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         client.post(jTextField1.getText(), nickName);
         jTextField1.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        client.goDown();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

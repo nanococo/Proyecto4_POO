@@ -20,6 +20,7 @@ public class Celebrity implements ISubject {
     private final ObjectInputStream inputStream;
 
     private final String name;
+    private boolean isDown = false;
 
     public Celebrity(ObjectInputStream inputStream, ObjectOutputStream outputStream, String name){
         this.inputStream = inputStream;
@@ -34,7 +35,7 @@ public class Celebrity implements ISubject {
 
 
     public void darseDeBaja(){
-        
+        isDown = true;
     }
 
     public ArrayList<Post> getPosts() {
@@ -68,8 +69,10 @@ public class Celebrity implements ISubject {
 
     @Override
     public void notifyAllSubs(IMessage message) {
-        for (IObserver observer: followers){
-            observer.update(message);//Se avisa a todos los observers y estos usan el servidor para enviar el tipo de notificacion
+        if(!isDown){
+            for (IObserver observer: followers){
+                observer.update(message);//Se avisa a todos los observers y estos usan el servidor para enviar el tipo de notificacion
+            }
         }
     }
 }

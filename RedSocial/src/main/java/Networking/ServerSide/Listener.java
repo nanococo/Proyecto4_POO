@@ -57,6 +57,7 @@ public class Listener extends Thread {
                         server.getPosts().add(post);
                         celebrity.getPosts().add(post);
                         outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "Post created successfully!"));
+                        celebrity.notifyAllSubs(new GenericMessage(MessageKeys.SEND_ALERT, "true",MessageKeys.TARGET_FOLLOWER, celebrity.getName()+" has made a new post!"));
                         break;
 
                     case MessageKeys.FOLLOW:
@@ -98,6 +99,12 @@ public class Listener extends Thread {
                             post = server.getPosts().get(follower.getCurrentPostIndex());
                             post.incLike();
                         }
+                        break;
+
+                    case MessageKeys.GO_DOWN:
+                        target = MessageKeys.TARGET_CELEBRITY;
+                        celebrity.darseDeBaja();
+                        outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "You have gone down :c"));
                         break;
 
                 }
