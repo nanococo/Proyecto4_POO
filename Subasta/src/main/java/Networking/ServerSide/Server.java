@@ -58,4 +58,13 @@ public class Server {
         }
         return null;
     }
+
+    public Buyer findBuyer(String buyerId){
+        for (Buyer buyer : buyers) {
+            if(buyer.getId().equals(buyerId)){
+                return buyer;
+            }
+        }
+        return null;
+    }
 }

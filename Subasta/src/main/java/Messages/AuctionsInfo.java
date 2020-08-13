@@ -15,12 +15,14 @@ public class AuctionsInfo implements Serializable {
     private final String estado;
     private final String nickSubastador;
     private final String id;
-    public AuctionsInfo(Product product, int pujaMasAlta, String estado, String nickSubastador, String id) {
+    private final String highestBidderID;
+    public AuctionsInfo(Product product, int pujaMasAlta, String estado, String nickSubastador, String id, String highestBidderID) {
         this.product = product;
         this.pujaMasAlta = pujaMasAlta;
         this.estado = estado;
         this.nickSubastador = nickSubastador;
         this.id = id;
+        this.highestBidderID = highestBidderID;
     }
 
     public Product getProduct() {
@@ -41,6 +43,10 @@ public class AuctionsInfo implements Serializable {
 
     public String getId() {
         return id;
+    }
+
+    public String getHighestBidderID() {
+        return highestBidderID;
     }
 
     public String toString(){

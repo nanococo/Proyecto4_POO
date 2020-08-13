@@ -62,8 +62,6 @@ public class PantallaNickName extends javax.swing.JFrame {
 
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
         String nickName = txtNickArea.getText();
-        //Celebrity = new Celebrity(nickName);
-        //Follower = new Follower(nickName);
         dispose();
         PantallaSubastador pantalla = new PantallaSubastador(nickName);
         pantalla.setVisible(true);

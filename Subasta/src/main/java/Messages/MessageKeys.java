@@ -8,12 +8,17 @@ public class MessageKeys {
     public static final String GET_AUCTIONS = "getAuctions";
     public static final String AUCTION_CONTAINER = "auctionContainer";
     public static final String AUCTIONEER_AUCTION_CONTAINER = "auctioneerAuctionContainer";
+    public static final String BUYER_UPDATE_CURRENT = "buyerUpdateCurrent";
+    public static final String AUCTIONEER_UPDATE_CURRENT = "auctioneerUpdateCurrent";
     public static final String FOLLOW_AUCTION = "followAuction";
     public static final String SHOW_AUCTION_PROPOSAL = "showActionProposal";
     public static final String ADD_BID = "addBid";
     public static final String APPROVE_BID = "approveBid";
     public static final String GET_AUCTIONEER_AUCTIONS = "getAuctioneerAuctions";
     public static final String GET_BUYER_AUCTIONS = "getBuyerAuctions";
+    public static final String CANCEL_AUCTION = "cancelAuction";
+    public static final String CLOSE_AUCTION = "closeAuction";
+    public static final String SEND_MESSAGE = "sendMessage";
 
 
     //Target types

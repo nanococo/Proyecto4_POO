@@ -53,9 +53,9 @@ public class Auctioneer {
 
     }
 
-    public void showOfferToAuctioneer(String id, String amount){
+    public void showOfferToAuctioneer(String id, String amount, String buyerId){
         try {
-            outputStream.writeObject(new GenericMessage(MessageKeys.SHOW_AUCTION_PROPOSAL, id, amount));
+            outputStream.writeObject(new GenericMessage(MessageKeys.SHOW_AUCTION_PROPOSAL, id, amount, buyerId));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -157,6 +157,10 @@ public class PantallaOferente extends javax.swing.JFrame implements SubastaFrame
         this.auctionsInfos = auctionsInfos;
     }
 
+    public AuctionsInfo getCurrentAuctionInfo() {
+        return currentAuctionInfo;
+    }
+
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;

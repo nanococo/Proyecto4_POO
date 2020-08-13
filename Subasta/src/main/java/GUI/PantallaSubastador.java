@@ -30,7 +30,7 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
     /**
      * Creates new form PantallaSubastador
      */
-    private AuctionsInfo subastaActual;
+    private AuctionsInfo currentAuctionInfo;
 
     private final Client client;
     private final String nickName;
@@ -153,6 +153,10 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
         this.auctionsInfos = auctionsInfos;
     }
 
+    public AuctionsInfo getCurrentAuctionInfo() {
+        return currentAuctionInfo;
+    }
+
     public String getNickName() {
         return nickName;
     }
@@ -161,8 +165,27 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
         return id;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
     private void btnCerrarSubastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSubastaActionPerformed
         // Se cierra la subasta y se entrega al que dio el tope mas alto
+        if(currentAuctionInfo !=null){
+            client.closeAuction(currentAuctionInfo.getId());
+            showNotification("Auction Closed!");
+
+            if(currentAuctionInfo.getHighestBidderID().isEmpty()){
+                showNotification("No hubo ganador en la subasta");
+            } else {
+                new PantallaEvioDeMensaje(this);
+
+            }
+
+        } else {
+            showNotification("You have to choose an auction to close!");
+        }
+
     }//GEN-LAST:event_btnCerrarSubastaActionPerformed
 
     private void btnNuevaSubastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaSubastaActionPerformed
@@ -172,6 +195,15 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
 
     private void btnCancelarSubastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarSubastaActionPerformed
         // Las subasta se cierra y termina sin nadie llevandose el objeto
+
+        if(currentAuctionInfo !=null){
+            client.cancelCurrentAuction(currentAuctionInfo.getId());
+            showNotification("Auction Cancelled! :c");
+        } else {
+            showNotification("You have to choose an auction to cancel!");
+        }
+
+
     }//GEN-LAST:event_btnCancelarSubastaActionPerformed
 
     private void btnMisSubastasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMisSubastasActionPerformed
@@ -198,17 +230,14 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
         client.createAuction(product);
     }
     
-    public void seleccionarSubasta(){
-        
-    }
-    
     @Override
     public void showAuction(AuctionsInfo subasta){
+        this.currentAuctionInfo = subasta;
         this.txtDescription.setText(subasta.toString());
         cargarImagen(subasta.getProduct().getImagePath());
     }
     
-    public void getNotificationFromNewBid(String valor, String id){
+    public void getNotificationFromNewBid(String valor, String id, String buyerId){
         String[] options = {"Aceptar", "Rechazar"};
         int x = JOptionPane.showOptionDialog(null,
                 "Nueva oferta para subasta#"+id+" por "+valor,
@@ -219,7 +248,7 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
 
         if(x==0){
             System.out.println("Aceptado");
-            client.approveOffer(id, valor);
+            client.approveOffer(id, valor, buyerId);
         } else {
             System.out.println("Denegado");
         }
@@ -238,7 +267,5 @@ public class PantallaSubastador extends javax.swing.JFrame implements SubastaFra
             Logger.getLogger(PantallaOferente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    
+
 }

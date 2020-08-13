@@ -72,9 +72,9 @@ public class Client {
         }
     }
 
-    public void approveOffer(String id, String newBid) {
+    public void approveOffer(String id, String newBid, String buyerId) {
         try {
-            outputStream.writeObject(new GenericMessage(MessageKeys.APPROVE_BID, id, newBid));
+            outputStream.writeObject(new GenericMessage(MessageKeys.APPROVE_BID, id, newBid, buyerId));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,6 +91,30 @@ public class Client {
     public void getBuyerAuctions() {
         try {
             outputStream.writeObject(new GenericMessage(MessageKeys.GET_BUYER_AUCTIONS));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void cancelCurrentAuction(String id) {
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.CANCEL_AUCTION, id));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void closeAuction(String auctionID) {
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.CLOSE_AUCTION, auctionID));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendMessageToWinner(String highestBidderID, String content) {
+        try {
+            outputStream.writeObject(new GenericMessage(MessageKeys.SEND_MESSAGE, highestBidderID, content));
         } catch (IOException e) {
             e.printStackTrace();
         }

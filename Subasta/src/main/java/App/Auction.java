@@ -3,6 +3,8 @@ package App;
 import App.Accounts.Auctioneer;
 import App.Accounts.Buyer;
 import Messages.AuctionsInfo;
+import Messages.GenericMessage;
+import Messages.MessageKeys;
 import Messaging.IMessage;
 import Observer.IObserver;
 import Observer.ISubject;
@@ -17,7 +19,7 @@ public class Auction implements ISubject {
     private int topBid;
     private Buyer highestBidder;
     private final ArrayList<Buyer> buyers = new ArrayList<>();
-    private final AuctionStatus auctionStatus;
+    private AuctionStatus auctionStatus;
     private final String id = UUID.randomUUID().toString();
 
     public Auction(Auctioneer auctioneer, Product product) {
@@ -26,13 +28,9 @@ public class Auction implements ISubject {
         this.topBid = product.getPrice();
         this.auctionStatus = AuctionStatus.ACTIVE;
     }
-    
-    public void enviarResultadoDeSubasta(){
-        //Notify
-    }
 
-    public void actualizarSubasta(){
-        //Notify
+    public AuctionStatus getAuctionStatus() {
+        return auctionStatus;
     }
 
     public void addBuyer(Buyer buyer){
@@ -59,7 +57,8 @@ public class Auction implements ISubject {
         this.highestBidder = highestBidder;
     }
 
-    public void acceptBid(String bid){
+    public void acceptBid(String bid, Buyer buyer){
+        highestBidder = buyer;
         setTopBid(Integer.parseInt(bid));
     }
 
@@ -68,7 +67,11 @@ public class Auction implements ISubject {
     }
     
     public AuctionsInfo getAuctionInfo(){
-        return new AuctionsInfo(product, topBid, auctionStatus.toString(), auctioneer.getName(), id);
+        if(highestBidder!=null){
+            return new AuctionsInfo(product, topBid, auctionStatus.toString(), auctioneer.getName(), id, highestBidder.getId());
+        } else {
+            return new AuctionsInfo(product, topBid, auctionStatus.toString(), auctioneer.getName(), id, "");
+        }
     }
 
     @Override
@@ -90,5 +93,15 @@ public class Auction implements ISubject {
             }
         }
         return false;
+    }
+
+    public void cancel() {
+        this.auctionStatus = AuctionStatus.CANCELLED;
+        notifyAllSubs(new GenericMessage(MessageKeys.SEND_ALERT, "true",MessageKeys.TARGET_BUYER, "Auction: "+getId()+" has been canceled"));
+    }
+
+    public void close() {
+        this.auctionStatus = AuctionStatus.CLOSED;
+        notifyAllSubs(new GenericMessage(MessageKeys.SEND_ALERT, "true",MessageKeys.TARGET_BUYER, "Auction: "+getId()+" is now closed!"));
     }
 }

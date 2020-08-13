@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import Messages.AuctionsInfo;
@@ -88,19 +83,15 @@ public class PantallaSubastas extends javax.swing.JFrame implements ListSelectio
     // End of variables declaration//GEN-END:variables
 
     public void setListInfo(){
-        String info[] = new String[auctionsInfos.size()];
+        String[] info = new String[auctionsInfos.size()];
         for (int i = 0; i< auctionsInfos.size(); i++) {
             AuctionsInfo subasta = auctionsInfos.get(i);
-            info[i] = subasta.getProduct().getName()+subasta.getPujaMasAlta()+" Estado: "+subasta.getEstado();
+            info[i] = subasta.getProduct().getName()+" "+subasta.getPujaMasAlta()+" Estado: "+subasta.getEstado()+" ID:"+subasta.getId();
         }
             listSubastas.setListData(info);
             listSubastas.addListSelectionListener(this);
     }
-    
-    public void askForList(){
-        //Llena la lista y se guarda el nombre y el id de todas las subastas
-        //Llama el metodo selecionar
-    }
+
     public void selectSubasta(int index){
         //Con los id guardados manda a llamar al servidor con el id selecionado
         //Y los datos recibidos los muestra en la pantalla principal

@@ -3,11 +3,9 @@ package Networking.ServerSide;
 import App.Auction;
 import App.Accounts.Auctioneer;
 import App.Accounts.Buyer;
+import App.AuctionStatus;
 import App.Product;
-import Messages.AuctioneerAuctionsContainer;
-import Messages.AuctionsContainer;
-import Messages.GenericMessage;
-import Messages.MessageKeys;
+import Messages.*;
 import Messaging.IMessage;
 
 import java.io.IOException;
@@ -75,9 +73,16 @@ public class Listener extends Thread {
                         target = MessageKeys.TARGET_BUYER;
                         genericMessage = (GenericMessage) message;
                         auction = server.findAuction(genericMessage.getParams()[0]);
-                        auction.addBuyer(buyer);
-                        buyer.addAuction(auction);
-                        outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "You are now following "+auction.getAuthor()+" auction!"));
+
+                        if(auction.getAuctionStatus().equals(AuctionStatus.ACTIVE)){
+                            auction.addBuyer(buyer);
+                            buyer.addAuction(auction);
+                            outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "You are now following "+auction.getAuthor()+" auction!"));
+                        } else {
+                            outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "This auction is not active"));
+                        }
+
+
                         break;
 
                     case MessageKeys.ADD_BID:
@@ -85,17 +90,21 @@ public class Listener extends Thread {
                         genericMessage = (GenericMessage) message;
                         auction = server.findAuction(genericMessage.getParams()[0]);
 
-                        if(auction.isBuyerInAuction(genericMessage.getParams()[2])){
+                        if(auction.getAuctionStatus().equals(AuctionStatus.ACTIVE)){
+                            if(auction.isBuyerInAuction(genericMessage.getParams()[2])){
 
-                            if(auction.validateBidAmount(genericMessage.getParams()[1])){
-                                auction.getAuctioneer().showOfferToAuctioneer(genericMessage.getParams()[0], genericMessage.getParams()[1]);
-                                outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "Bid sent successfully..."));
+                                if(auction.validateBidAmount(genericMessage.getParams()[1])){
+                                    auction.getAuctioneer().showOfferToAuctioneer(genericMessage.getParams()[0], genericMessage.getParams()[1], genericMessage.getParams()[2]);
+                                    outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "Bid sent successfully..."));
+                                } else {
+                                    outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "Your amount is lower than the current top!"));
+                                }
+
                             } else {
-                                outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "Your amount is lower than the current top!"));
+                                outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "You have to join the auction first!!"));
                             }
-
                         } else {
-                            outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "You have to join the auction first!!"));
+                            outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "This auction is not active"));
                         }
                         break;
 
@@ -103,8 +112,10 @@ public class Listener extends Thread {
                         target = MessageKeys.TARGET_BUYER;
                         genericMessage = (GenericMessage) message;
                         auction = server.findAuction(genericMessage.getParams()[0]);
-                        auction.acceptBid(genericMessage.getParams()[1]);
+                        auction.acceptBid(genericMessage.getParams()[1], server.findBuyer(genericMessage.getParams()[2]));
                         auction.notifyAllSubs(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "New highest bid for auction on: "+genericMessage.getParams()[1]));
+                        auction.notifyAllSubs(new BuyerUpdateCurrent(auction));
+                        outputStream.writeObject(new AuctioneerUpdateContent(auction));
                         break;
 
                     case MessageKeys.GET_AUCTIONEER_AUCTIONS:
@@ -115,6 +126,27 @@ public class Listener extends Thread {
 
                     case MessageKeys.GET_BUYER_AUCTIONS:
                         outputStream.writeObject(new AuctionsContainer(buyer.getAuctions()));
+                        break;
+
+                    case MessageKeys.CANCEL_AUCTION:
+                        genericMessage = (GenericMessage) message;
+                        auction = server.findAuction(genericMessage.getParams()[0]);
+                        auction.cancel();
+                        auction.notifyAllSubs(new BuyerUpdateCurrent(auction));
+                        outputStream.writeObject(new AuctioneerUpdateContent(auction));
+                        break;
+
+                    case MessageKeys.CLOSE_AUCTION:
+                        genericMessage = (GenericMessage) message;
+                        auction = server.findAuction(genericMessage.getParams()[0]);
+                        auction.close();
+                        auction.notifyAllSubs(new BuyerUpdateCurrent(auction));
+                        outputStream.writeObject(new AuctioneerUpdateContent(auction));
+                        break;
+
+                    case MessageKeys.SEND_MESSAGE:
+                        genericMessage = (GenericMessage) message;
+                        server.findBuyer(genericMessage.getParams()[0]).sendMessage(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "Auction Host says: "+genericMessage.getParams()[1]));
                         break;
                 }
 
