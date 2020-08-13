@@ -129,19 +129,33 @@ public class Listener extends Thread {
                         break;
 
                     case MessageKeys.CANCEL_AUCTION:
+                        target = MessageKeys.TARGET_AUCTIONEER;
                         genericMessage = (GenericMessage) message;
                         auction = server.findAuction(genericMessage.getParams()[0]);
-                        auction.cancel();
-                        auction.notifyAllSubs(new BuyerUpdateCurrent(auction));
-                        outputStream.writeObject(new AuctioneerUpdateContent(auction));
+
+                        if(auction.getAuctionStatus().equals(AuctionStatus.ACTIVE)){
+                            auction.cancel();
+                            auction.notifyAllSubs(new BuyerUpdateCurrent(auction));
+                            outputStream.writeObject(new AuctioneerUpdateContent(auction));
+                        } else {
+                            outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "This auction is cancelled!"));
+                        }
+
                         break;
 
                     case MessageKeys.CLOSE_AUCTION:
+                        target = MessageKeys.TARGET_AUCTIONEER;
                         genericMessage = (GenericMessage) message;
                         auction = server.findAuction(genericMessage.getParams()[0]);
-                        auction.close();
-                        auction.notifyAllSubs(new BuyerUpdateCurrent(auction));
-                        outputStream.writeObject(new AuctioneerUpdateContent(auction));
+
+                        if(auction.getAuctionStatus().equals(AuctionStatus.ACTIVE)){
+                            auction.close();
+                            auction.notifyAllSubs(new BuyerUpdateCurrent(auction));
+                            outputStream.writeObject(new AuctioneerUpdateContent(auction));
+                        } else {
+                            outputStream.writeObject(new GenericMessage(MessageKeys.SEND_ALERT, "true",target, "This auction is already closed!"));
+                        }
+
                         break;
 
                     case MessageKeys.SEND_MESSAGE:
